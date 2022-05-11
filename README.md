@@ -28,6 +28,26 @@ Tipos de usuários:
   - upload de arquivos a partir de edge location (cliente server)
 - RRS - Reduced Redondancy Storage
   - armazena tipos de arquivos equivalentes thumbnail
+  
+
+## Elastic Public Cloud (EC2)
+
+EBS - Elastic Block Store: tipos de volumes que permiete aptmizar o armazenamento
+- SSD
+- HDD
+- Criar volumes
+  - EC2 > Elastic Block Store > volumos > criar
+- Snapshots
+  - EC2 > Elastic Block Store > Snapshots > criar
+AMI - Amazon Machine Image
+
+EC2  Global Viel
+- Visualização geral de todas as máquinas em todas as Regions.
+
+AWS Marketplace
+- Empresas ou pessoas físicas disponibilizam software no marketplace em instâncias EC2
+
+
 ## Virtual private cloud (VPC)
     default VPC X Custom VPC
 Conceitos importantes:
