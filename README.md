@@ -32,21 +32,50 @@ Tipos de usuários:
 
 ## Elastic Public Cloud (EC2)
 
-EBS - Elastic Block Store: tipos de volumes que permiete aptmizar o armazenamento
-- SSD
-- HDD
+#### EBS - Elastic Block Store: tipos de volumes que permiete aptmizar o armazenamento
+
+*Não é possível conectar um único EBS a duas instâncias EC2 ao mesmo tempo
+
+- Tamanho fixo alocado
+- Tipos de discos:
+  - SSD
+  - HDD
 - Criar volumes
   - EC2 > Elastic Block Store > volumos > criar
 - Snapshots
   - EC2 > Elastic Block Store > Snapshots > criar
-AMI - Amazon Machine Image
+  - EC2 > Elastic Block Store > Snapshots > create image 
+- Lifecycle Manager - cria políticas para ciclos de backups
 
-EC2  Global Viel
+#### EFS - Elastic File System
+- É possível conectar um EFS a uma ou mais instâncias EC2 ao mesmo tempo.
+- Tamanho variável
+
+#### User data EC2 - cria instância e executa script somente a primeira vez que máquina iniciar
+
+#### Estado de uma instância:
+-  running
+- stopped
+- hibernate behavior (precisa habilitar na criação da instância)
+  - volume EBS precisa ser encriptado 
+
+#### AMI - Amazon Machine Image
+Imagem virtual
+
+#### EC2  Global Viel:
 - Visualização geral de todas as máquinas em todas as Regions.
 
-AWS Marketplace
+#### AWS Marketplace:
 - Empresas ou pessoas físicas disponibilizam software no marketplace em instâncias EC2
 
+#### Security Groups - Virtual firewall
+- inbounds x outbounds
+- stateful
+
+## AWS WAF
+Protects against DDoS Attacks and malicious Web Traffic.
+- Atua na camanda 7 de aplicação
+- Filtrar tráficos de origens (ex: países\)
 
 ## Virtual private cloud (VPC)
     default VPC X Custom VPC
