@@ -77,6 +77,34 @@ Protects against DDoS Attacks and malicious Web Traffic.
 - Atua na camanda 7 de aplicação
 - Filtrar tráficos de origens (ex: países\)
 
+## AWS Database
+Relacional (RDS - Relational database service)
+- Mulit AZ -> ex: Disaster Recovery
+  - ex: Duas DB idênticas em duas ou mais AZ, mesmo DNS
+  
+        Amazon RDS > databases > modify > multi-AZ deployment
+
+- Read Replica -> cópia idêntica
+  - Duas DB com DNS diferente, inserção manual na réplica
+  - backup enabled
+  
+        Amazon RDS > databases > actions > create read replica
+
+Backups:
+- Automated: 1 - 35 dias - > S3 (free)
+  - Amazon RDS > databases > modify > backup
+- DB snapshot: manual 
+  - Amazon RDS > actions > take snapshot --> snapshots
+      
+#### Dynamo DB
+- Latência baixa (milisegundos)
+- Documentos -> key value
+- APP Web/ mobile/ games
+- SSD
+- Armazenamento em 3 ou mais data centers
+- Consistent Reads x Strongly consistent reads
+  - Consistent Reads: Write/read maior que 1 segundo
+  - Strongly consistent reads: Write/read menor que 1 segundo
 ## Virtual private cloud (VPC)
     default VPC X Custom VPC
 Conceitos importantes:
