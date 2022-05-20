@@ -105,14 +105,46 @@ Backups:
 - Consistent Reads x Strongly consistent reads
   - Consistent Reads: Write/read maior que 1 segundo
   - Strongly consistent reads: Write/read menor que 1 segundo
+  
+#### Elasticache
+- Rápido, latência baixa (criação, operação e escalabidade)
+- Não utiliza disco
+- Armazenamento em processamento e memória (in-memory cache)
+- Ex: Web site e-commerce(acessos simultâneos ao mesmo produtos)
+- Tipos:
+  - Memory cached: armazena no bd relacionado a objetos
+  - Redis: key-value and Multi-AZ
+  
+#### Redshift
+- Warehouse (armazem) ex: Toyota, Amazon
+- Armazenamento em colunas (leitura em colunas)
+- 1 datbase inicia com 160GB
+- Compressão de dados
+- Tipos:
+  - Single mode -> 1 instância DB
+  - Compute mode -> 128 instâncias de DB
+- MPP: Massively Parallel Processing -> Leitura em várias DB ao mesmo tempo  
+- Não é Multi-AZ
+
+#### Aurora
+- criada 2014
+- compatibilidade com mysql oracle
+- 5x Faster
+- 10x barata
+- Default 10gb -> autoscaling automatico (646GB) -> 64TB
+- criação de replicas (read) x15
+- Recover -> Point in-time 
+- Backup continuo -> 3 zonas
+
+
 ## Virtual private cloud (VPC)
     default VPC X Custom VPC
 Conceitos importantes:
 - VPC PEERING - conectar VPC com outra VPC
 - No TRANSIT entre VPCs: permite apenas conexão direta
-- ACL -> statefull: permite regras de permissão e de bloqueio
-- SEC GROUPS -> stateless: apenas permite (bloqueia o restante)
-
+- ACL -> stateless
+- SEC GROUPS -> stateful
+> https://medium.com/awesome-cloud/aws-difference-between-security-groups-and-network-acls-adc632ea29ae#:~:text=Security%20groups%20are%20tied%20to,assigned%20explicitly%20to%20the%20instance.
 
 ## CLI - Commands
 aws configure
