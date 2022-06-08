@@ -137,6 +137,44 @@ Backups:
 - Backup continuo -> 3 zonas
 
 
+## Route53
+Serviço AWS para AWS, responsável pelas resoluções de endereçamento IP.
+- Redundância de localização: replicado para todas locations
+- 100% SLA (availabilty)
+- GEO Location, Failover 
+
+#### DNS Records (Registros)
+- HOST A (A -IPV4 ou AAAA - IPV6): amazon.com -> 1.1.1.1
+- Alias (Cname): *cursos*.amazon.com -> 1.1.1.2
+- Mail exchange (MX): Email (server), utiliza prioridade 
+- Service Record (SRV): qual serviço está rodando? target(IP)? porta? Prioridade?
+- Start of Authority(SOA): Primary NS
+- Name Server (NS): Armazena Start of Authority
+- POinter (PTR): Constrário do Host, dado um IP converte no Domínio DNS
+
+### Routing
+Health check
+- #### Simple Routing
+  Uma requisição de DNS para cada servidor, envia randomicamente o endereçamento IP para o HOST
+
+- #### Failover Routing
+  Quando um servidor falhar redirecionar para outro
+
+- #### Geolocation Routing
+  Rotear pra uma Region a partir de uma localização
+
+- #### Geoproximity Routing(Traffic Flow Only)
+  Traffic flow: idêntifica onde o tráfico está passando aplicando políticas para esse tráfico, baseado em aproximação de geolocation
+
+- #### Latency-based Routing
+  Redirecionamento feito a partir da menor latência, acessando os servidores mais próximos
+
+- #### Multivalue Answer Routing
+  Simple check with Health check
+
+- #### Weighted Routing
+  - Peso de tráfego que está sendo enviado para cada servidor
+
 ## Virtual private cloud (VPC)
     default VPC X Custom VPC
 Conceitos importantes:
