@@ -180,10 +180,18 @@ Health check
 Conceitos importantes:
 - VPC PEERING - conectar VPC com outra VPC
 - No TRANSIT entre VPCs: permite apenas conexão direta
-- ACL -> stateless
-- SEC GROUPS -> stateful
+- ACL -> stateless - Deny && Allow
+- SEC GROUPS -> stateful - apenas Allow
 > https://medium.com/awesome-cloud/aws-difference-between-security-groups-and-network-acls-adc632ea29ae#:~:text=Security%20groups%20are%20tied%20to,assigned%20explicitly%20to%20the%20instance.
 
+Fluxo até internet Gateway
+> Subnet > ACL > Routing Table > Router > Internet Gateway
+
+### NAT - Network address translation
+Roteador que tem um enderaçamento privado e um endereço público, serve para transcrever um ip privado para um ip público de forma que este tenha acesso a rede.
+
+- Nat instance: dispositivo criado como um servidor EC2, sem escalabilidade
+- Nat gateway: como um aplicação, mais confiavel
 ## CLI - Commands
 aws configure
 aws iam list-users
