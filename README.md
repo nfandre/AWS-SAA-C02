@@ -191,10 +191,33 @@ Fluxo até internet Gateway
 Roteador que tem um enderaçamento privado e um endereço público, serve para transcrever um ip privado para um ip público de forma que este tenha acesso a rede.
 
 - Nat instance: dispositivo criado como um servidor EC2, sem escalabilidade
+  > Cria uma instância EC2 do tipo Nat que será associada a uma rota de saída para uma route table.
 - Nat gateway: como um aplicação, mais confiavel
+ > VPC > Nat gateway - Create
+
+### ACL
+- In bound
+- Out bound
+
+### VPC Flow Logs
+VPC > actions > create flow log
+
+### Bations Hosts (Jump Box)
+Servido que fica dentro da tupologia, sendo o único que tenha acesso a internet. É através desse host que será acessado as outras instâncias da rede.
+
+### Direct Connect
+Roteadores da Amazon que conectam diretamente com a nuvem da AWS e fazem conexão diretamente com uma provedora de telecom (internet).
+
+### VPC EndPoint
+Cria uma ponte entre a VPC e os serviços AWS, ou seja, uma máquina dentro de uma VPC sem acesso a internet consegue acessar os recursos da AWS.
+- Interface endpoint
+- Gateway endpoint
+> VPC > Endpoint > create
+
 ## CLI - Commands
 aws configure
 aws iam list-users
 aws s3 ls
 
 aws s3 cp --recursive s3://andrefreitasoriginal s3://andrefreitasaws
+aws s3 ls --region us-east-1
