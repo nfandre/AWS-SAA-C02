@@ -214,6 +214,53 @@ Cria uma ponte entre a VPC e os serviços AWS, ou seja, uma máquina dentro de u
 - Gateway endpoint
 > VPC > Endpoint > create
 
+## Architect - Aplicações AWS
+
+### SQS - Simple Queue Service 
+Serviço simples de fila, sistema de mensagens que são armazenados em um aplicativo, geralmente máquinas EC2.
+- Standard: Não possui ordem de envio, não é em sequência e pode ser duplicada.
+- FIFO: Garantia de entrega em sequência
+> https://docs.aws.amazon.com/pt_br/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html
+- #### Pull base
+  É solicitado informações para o SQS, e o mesmo retorna quem está na fila.
+
+### Simple Workflow Service
+Conjunto de tarefas que devem ser executadas em uma ordem específica. Gerencia o workflow tasks de um sistema.
+- Pode se extender até 10000 mil tarefas
+- Faz por volta de 1000 por segundo
+
+### Elastic Transcoder
+Converte mídias para formatos específicos (MP4,MP3,HD).
+
+### API Gateway
+Faz um serviço de "Load Balancer" para aplicações, portão de entrada para softwares que acessam de forma programática os serviços da AWS.
+
+### Kinesis
+Responsável por armazenar dados de streaming para serem analisados ou utilizados por outra aplicações. Armazena em shad(partes).
+- Streams: recebe os dados e armazena para que depois outros serviços possam consumi-los.
+- Firehose: recebe os dados, mas não armazena, apenas processa ou deixa que outro serviço o faça.
+- Analytics: faz a análise dentro do Streams e do Firehose.
+
+### Cognito
+Web Identity Federation, permitir ou bloquear acesso de acordo com uma credencial que não está armazenada na aplicação.
+- User Pool: Retorna autenticação do User.
+- Identity Pool: Retorna o que pode ou não pode acessar
+
+### SNS - Simple Notification Service
+Sistema de notificação
+- Push
+- SMS
+- Text Message
+- Email
+- HTTP
+
+## Serverless Lambda 
+- "Sem servidor"
+- Scaling por conta da AWS
+- Pricing:
+  - 1 Milion Requests = FREE
+  - 0,20R$ por cada 1M de requisições
+  > https://aws.amazon.com/pt/lambda/pricing/
 ## CLI - Commands
 aws configure
 aws iam list-users
