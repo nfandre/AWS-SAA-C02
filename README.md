@@ -51,7 +51,44 @@ Tipos de usuários:
 - É possível conectar um EFS a uma ou mais instâncias EC2 ao mesmo tempo.
 - Tamanho variável
 
-#### User data EC2 - cria instância e executa script somente a primeira vez que máquina iniciar
+#### Amazon EC2 - Auto Scaling
+Escalonamento 
+  - Horizontal
+
+Escala baseada em:
+  - CPU
+  - FILA
+  - SQS
+  - Rede
+  - Mem 
+  - etc..
+
+Suporta quais apps?
+- Os dados não podem ficar no servidor
+- segmentar para outros serviços (RDS, EFS etc)
+
+Como Rotear o acesso?
+- Utilizando ELB, balanceador de carga
+*Custo zero
+
+
+
+#### ELB - Elastic Load Balancer
+Balanceador de carga
+- Targets:
+  - Instâncias
+  - Container
+  - Lambda
+  
+- Integra com Cert. Manager
+- Faz Health Check
+- Tipos:
+  - ALB Application Load Balancer: Layer 7, nível de aplicação precisa requests
+  - NLB Network Load Balancer: camada de rede, high perfomance 
+  - CLB Classic Load Balancer: 
+
+#### User data EC2
+cria instância e executa script somente a primeira vez que máquina iniciar
 
 #### Estado de uma instância:
 -  running
@@ -76,6 +113,35 @@ Imagem virtual
 Protects against DDoS Attacks and malicious Web Traffic.
 - Atua na camanda 7 de aplicação
 - Filtrar tráficos de origens (ex: países\)
+
+## ECS
+Serviço de orquestração de containers
+- Cluster EC2 ou Cluster AWS Fargate
+
+Integra com:
+- EC2
+- IAM
+- SM Security manager
+- CW Cloud Watch
+- ELB
+- CI Devops
+
+Task definitions ( Usado para configurar porta, autoscaling, ELB), pode ser feito com YAML.
+
+## AWS Config
+Dedo duro, permite avaliar(auditar) recursos para garantir conformidade e seguir diretrizes.
+- Monitoramento contínuo
+- Histórico de tudo
+- CloudTrail amigável
+- Escopo Regional
+- Custom checks
+
+## AWS Cloud Trail
+- Trilhas de logs
+- Possibilita automação
+- tudo, tudo e tudo
+- Regional (mas da para gerar global)
+- Integra com Cloud Watch (log, metrics, alert)
 
 ## AWS Database
 Relacional (RDS - Relational database service)
