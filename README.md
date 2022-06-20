@@ -236,7 +236,7 @@ Converte mídias para formatos específicos (MP4,MP3,HD).
 Faz um serviço de "Load Balancer" para aplicações, portão de entrada para softwares que acessam de forma programática os serviços da AWS.
 
 ### Kinesis
-Responsável por armazenar dados de streaming para serem analisados ou utilizados por outra aplicações. Armazena em shad(partes).
+Responsável por coletar, armazenar e analizar dados de streaming para serem analisados ou utilizados por outra aplicações. Armazena em shad(partes).
 - Streams: recebe os dados e armazena para que depois outros serviços possam consumi-los.
 - Firehose: recebe os dados, mas não armazena, apenas processa ou deixa que outro serviço o faça.
 - Analytics: faz a análise dentro do Streams e do Firehose.
@@ -261,10 +261,25 @@ Sistema de notificação
   - 1 Milion Requests = FREE
   - 0,20R$ por cada 1M de requisições
   > https://aws.amazon.com/pt/lambda/pricing/
+  
+## Cloud Formation
+Cria a partir de códigos (template) as configurações de serviços na AWS (EC2, S3 etc)
+- Benefícios:
+  - INFRA baseada em códigos
+    - Controle e gerenciamento
+    - Versões
+    - Visualizar mudanças antes que elas sejam aplicadas
+  - Custo
+    - TAG.
+    - Custo estimado
+    - Sistema de adição e remoção de serviços
 ## CLI - Commands
 aws configure
+
 aws iam list-users
+
 aws s3 ls
 
 aws s3 cp --recursive s3://andrefreitasoriginal s3://andrefreitasaws
+
 aws s3 ls --region us-east-1
