@@ -122,6 +122,11 @@ Imagem virtual
 - ENI Elastic network interface: Basic adapter type when don't have any high-performance requirements, all type instances.
 - ENA Elastic network adapter: Enhanced networking performance, High bandwith and lower inter-instance latency, choose supported instance.
 - EFA Elastic fabric adapter: High Performance computing nad MPI and ML use cases, Tightly coupled applications, all type instances.
+
+#### Public, Private and Elastic IP Addresses
+- Public IP: is a dynamic address, cannot be remapped acrooss AZs
+- Elastic IP: is a static address, Can be remapped acrooss AZs
+- Private IP: Used in public and Private Subnets, retained when instance is stopped
 ## AWS WAF
 Protects against DDoS Attacks and malicious Web Traffic.
 - Atua na camanda 7 de aplicação
