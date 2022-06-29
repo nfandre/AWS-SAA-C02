@@ -109,6 +109,19 @@ Imagem virtual
 - inbounds x outbounds
 - stateful
 
+#### Acessing Services - Acess Keys and IAM Roles
+- Access Keys (não é o mais indicado por segurança): é configurado na instância EC2, é uma chave de acesso armazenada no sismtema de arquivo da instância.
+- Intances Profiles (IAM Roles): A instância tem uma IAM Role associada, que contém as Policy de acesso.
+
+#### EC2 Placement Groups
+- cluster: packs instances close together inside an Availability zone. This strategy enables workloads to achieve the low-latency network performance necessary for tightly-coupled node-to-node communication that is typlical of HPC Applications
+- Partition: spreads your instances across logical partition such that group of instances in one partition do not share de underlying hardware with groups of instances in diefferente partitions. This strategy is typically used by large distributed and replicated worloads, such as Hadoop, Cassandra, and Kafka
+- spread: strictly  places a small group of instances across distinct underlying hardware to reduce correlated failures
+
+#### ENIs Elastic Network Iterfaces
+- ENI Elastic network interface: Basic adapter type when don't have any high-performance requirements, all type instances.
+- ENA Elastic network adapter: Enhanced networking performance, High bandwith and lower inter-instance latency, choose supported instance.
+- EFA Elastic fabric adapter: High Performance computing nad MPI and ML use cases, Tightly coupled applications, all type instances.
 ## AWS WAF
 Protects against DDoS Attacks and malicious Web Traffic.
 - Atua na camanda 7 de aplicação
