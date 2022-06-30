@@ -131,6 +131,14 @@ Imagem virtual
 #### Bastion Hosts
 É uma forma de conectar em máquinas EC2 com ip privado dentro de uma VPC, para isso é usado uma instância com ip público com saída internet gateway. A conxão se dá acessando a instância pública que irá acessar a instância privada através do ip privado.
 
+#### Amazon EC2 Princing Use Cases
+- On-Demand: Small project for several hours, cannot be interrupted.
+- Reserved: Steady-state, business critical, line-of-business apliccation, conitnuous demand.
+- Scheduled Reserved: Reporting application, runs for 6 hours a day, 4 days per week.
+- Spot Instances: Compute-intensive, const-sensitive distrubted computing, can withstand interruption.
+- Dedicated Intances: Security-sensitive application, requires dedicated hardware; per-instance billing.
+- Dedicated Hosts: Database with per-socker licensing.
+
 #### AWS Nitro Sytem - Nitro Instances and Nitro Enclaves
 Is the underlying plataform for the next generation of EC2 instances
 - bare metal and virtualized instances
@@ -140,6 +148,7 @@ Is the underlying plataform for the next generation of EC2 instances
 AWS Nitro Enclaves
 - Isolated compute environments
 - no persisitente storage, interactive access
+
 ## AWS WAF
 Protects against DDoS Attacks and malicious Web Traffic.
 - Atua na camanda 7 de aplicação
