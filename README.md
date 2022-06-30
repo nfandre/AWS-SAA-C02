@@ -122,11 +122,24 @@ Imagem virtual
 - ENI Elastic network interface: Basic adapter type when don't have any high-performance requirements, all type instances.
 - ENA Elastic network adapter: Enhanced networking performance, High bandwith and lower inter-instance latency, choose supported instance.
 - EFA Elastic fabric adapter: High Performance computing nad MPI and ML use cases, Tightly coupled applications, all type instances.
-
+> EC2 > Elastic IP > Allocate
 #### Public, Private and Elastic IP Addresses
 - Public IP: is a dynamic address, cannot be remapped acrooss AZs
 - Elastic IP: is a static address, Can be remapped acrooss AZs
 - Private IP: Used in public and Private Subnets, retained when instance is stopped
+
+#### Bastion Hosts
+É uma forma de conectar em máquinas EC2 com ip privado dentro de uma VPC, para isso é usado uma instância com ip público com saída internet gateway. A conxão se dá acessando a instância pública que irá acessar a instância privada através do ip privado.
+
+#### AWS Nitro Sytem - Nitro Instances and Nitro Enclaves
+Is the underlying plataform for the next generation of EC2 instances
+- bare metal and virtualized instances
+- Especialized hardware
+- improves performance, security and innovation 
+
+AWS Nitro Enclaves
+- Isolated compute environments
+- no persisitente storage, interactive access
 ## AWS WAF
 Protects against DDoS Attacks and malicious Web Traffic.
 - Atua na camanda 7 de aplicação
@@ -276,9 +289,10 @@ Roteador que tem um enderaçamento privado e um endereço público, serve para t
 
 - Nat instance: dispositivo criado como um servidor EC2, sem escalabilidade
   > Cria uma instância EC2 do tipo Nat que será associada a uma rota de saída para uma route table.
+  > requires the source and destination checks to be disabled
 - Nat gateway: como um aplicação, mais confiavel
  > VPC > Nat gateway - Create
-
+> Nat gateway é criado em uma subnet publica
 ### ACL
 - In bound
 - Out bound
