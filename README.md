@@ -71,7 +71,11 @@ Como Rotear o acesso?
 - Utilizando ELB, balanceador de carga
 *Custo zero
 
-
+#### Elasticity: Escaling Up vc Out
+- Scaling Up (Vertical scaling): means adding resources to the instance, add more hardware.
+  - Limitation is that it has a single point of failure (SPOF)
+  
+Scaling Out (Horizontal scaling): add another instance of application, provides greater resiliency, can be used to add almost unlimited capacity.
 
 #### ELB - Elastic Load Balancer
 Balanceador de carga
