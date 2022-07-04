@@ -51,46 +51,6 @@ Tipos de usuários:
 - É possível conectar um EFS a uma ou mais instâncias EC2 ao mesmo tempo.
 - Tamanho variável
 
-#### Amazon EC2 - Auto Scaling
-Escalonamento 
-  - Horizontal
-
-Escala baseada em:
-  - CPU
-  - FILA
-  - SQS
-  - Rede
-  - Mem 
-  - etc..
-
-Suporta quais apps?
-- Os dados não podem ficar no servidor
-- segmentar para outros serviços (RDS, EFS etc)
-
-Como Rotear o acesso?
-- Utilizando ELB, balanceador de carga
-*Custo zero
-
-#### Elasticity: Escaling Up vc Out
-- Scaling Up (Vertical scaling): means adding resources to the instance, add more hardware.
-  - Limitation is that it has a single point of failure (SPOF)
-  
-Scaling Out (Horizontal scaling): add another instance of application, provides greater resiliency, can be used to add almost unlimited capacity.
-
-#### ELB - Elastic Load Balancer
-Balanceador de carga
-- Targets:
-  - Instâncias
-  - Container
-  - Lambda
-  
-- Integra com Cert. Manager
-- Faz Health Check
-- Tipos:
-  - ALB Application Load Balancer: Layer 7, nível de aplicação precisa requests
-  - NLB Network Load Balancer: camada de rede, high perfomance 
-  - CLB Classic Load Balancer: 
-
 #### User data EC2
 cria instância e executa script somente a primeira vez que máquina iniciar
 
@@ -152,6 +112,111 @@ Is the underlying plataform for the next generation of EC2 instances
 AWS Nitro Enclaves
 - Isolated compute environments
 - no persisitente storage, interactive access
+
+
+
+## Elastic Load Balancing and Auto Scaling
+### Elasticity: Escaling Up vc Out
+- Scaling Up (Vertical scaling): means adding resources to the instance, add more hardware.
+  - Limitation is that it has a single point of failure (SPOF)
+
+Scaling Out (Horizontal scaling): add another instance of application, provides greater resiliency, can be used to add almost unlimited capacity.
+
+### Amazon EC2 Auto Scaling
+Escalonamento
+- Horizontal
+
+Escala baseada em:
+- CPU
+- FILA
+- SQS
+- Rede
+- Mem
+- etc..
+
+Suporta quais apps?
+- Os dados não podem ficar no servidor
+- segmentar para outros serviços (RDS, EFS etc)
+
+Como Rotear o acesso?
+- Utilizando ELB, balanceador de carga
+  *Custo zero
+  
+#### Configuração:
+- Launch Template: Specifies the EC2 instance configuration
+- Launch Config: are replaced by launch templates an have fewer features
+
+####  Health checks
+- EC2: EC2 status checks
+- ELB: Use the ElB health checks int addition to EC2 status checks
+- Health check grace period
+  - how long to wait berore checking the health status of the instance
+  - Auto scaling does not act on heath checks unitl grace period expires
+
+#### Monitoring
+- Group metrics (ASG):
+  - Data pints about the auto scaling group
+  - Must be enabled
+  - no charge
+  - 1-minute granularity
+- Basic monitoring (Instances): instances Sending metrics to CloudWatch
+  - 5-minute granularity
+  - no charge
+- Detailed monitoring (Instances)
+  - 1-minute granularity
+  - Charges apply (it have to pay)
+  
+
+#### Addtional Scaling Settings
+- Cooldowns: Used with simple scaling polici to prevent Auto scaling from laucnhing or terminating before effects of previus activities are visible.
+  - Default value is 300 seconds (5 minutos)
+- Termination Policy: Controls which instances to terminate first when a scale-in event occurs.
+- Termination Protection: Prevents Auto scaling from terminating protected instances.
+- Standby state - Used to put an instance in the InService state into the Standby state, pudate ou trobleshoot the instance
+- Lifecycle Hooks - Used to  custom actions by pausing instances as the ASG launches or terminates them
+ - Use case: run a script to download and install software after launching
+
+### ELB - Elastic Load Balancer
+Balanceador de carga
+- Targets:
+  - Instâncias
+  - Container
+  - Lambda
+
+- Integra com Cert. Manager
+- Faz Health Check
+
+#### Types of ELB
+- ##### ALB Application Load Balancer
+  Layer 7, nível de aplicação precisa requests
+  - Target Type: IP, Instance EC2, Lambda, ECS
+  - HTTP, HTTPS
+  - No Static IP address
+  - HTTP header based
+  - No privateLink support
+  - Routing: 
+    Are used to route requests to registered targets, it can be EC2 intances, IP addresses, lambda functions or containers
+    > - requests can be routed based on the path in the URL
+    > - Path-based routing: /example /public
+    > - host-based routing: example.curso.com; public.curso.com
+
+- ##### NLB Network Load Balancer:
+  Layer 4, camada de rede, high perfomance and veey low latency, TLS
+  - Target Type: IP, Instance EC2
+  - TCP, UDP, TLS
+  - Static IP address
+  - No HTTP Header based
+  - PrivateLink support (TCP, TLS)
+  - nodes routing: Targets can be EC2 instance or  IP addresses (can be outside a VPC a VPC - E.G. on-premises)
+    >  - NLB nodes can have elastic IPs in each subnet
+    >  - a separete listener on a unique port is required for routing: example:8080
+    >  - requests are routed based on IP protocol data
+  
+- ##### CLB Classic Load Balancer: 
+  Old generation; not recommened for new applications, layer 7 and 4.
+- ##### GLB Gateway Load Balancer: 
+  Layer 3 listens packets on all ports, used in front of virtual appliances such as firewalls, IDS/IPS
+
 
 ## AWS WAF
 Protects against DDoS Attacks and malicious Web Traffic.
