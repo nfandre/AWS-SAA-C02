@@ -194,12 +194,12 @@ Balanceador de carga
   - No Static IP address
   - HTTP header based
   - No privateLink support
-  - Routing: 
+  - Routing Target Group: 
     Are used to route requests to registered targets, it can be EC2 intances, IP addresses, lambda functions or containers
     > - requests can be routed based on the path in the URL
     > - Path-based routing: /example /public
     > - host-based routing: example.curso.com; public.curso.com
-
+  - Query String Routing
 - ##### NLB Network Load Balancer:
   Layer 4, camada de rede, high perfomance and veey low latency, TLS
   - Target Type: IP, Instance EC2
@@ -207,7 +207,7 @@ Balanceador de carga
   - Static IP address
   - No HTTP Header based
   - PrivateLink support (TCP, TLS)
-  - nodes routing: Targets can be EC2 instance or  IP addresses (can be outside a VPC a VPC - E.G. on-premises)
+  - nodes routing Target Group: Targets can be EC2 instance or  IP addresses (can be outside a VPC a VPC - E.G. on-premises)
     >  - NLB nodes can have elastic IPs in each subnet
     >  - a separete listener on a unique port is required for routing: example:8080
     >  - requests are routed based on IP protocol data
@@ -217,6 +217,17 @@ Balanceador de carga
 - ##### GLB Gateway Load Balancer: 
   Layer 3 listens packets on all ports, used in front of virtual appliances such as firewalls, IDS/IPS
 
+### Amazon EC2 Scaling Policies
+- Dynamic Scaling 
+  - Target Tracking: ASGAverageCPUUtilization
+    - add new instance to average CPU utilization
+  - Simple Scaling:
+    - launch tow instances in the Auto Scaling Group
+    - Wait 300 seconds before allowing another scaling activity
+  - Step Scaling
+    - launch tow instances in the Auto Scaling Group or more using de breach
+  - Scheduled scaling
+  
 
 ## AWS WAF
 Protects against DDoS Attacks and malicious Web Traffic.
@@ -459,3 +470,5 @@ aws s3 ls
 aws s3 cp --recursive s3://andrefreitasoriginal s3://andrefreitasaws
 
 aws s3 ls --region us-east-1
+
+nslookup: check DNS name of lod balancer and find out what IP addresses 
