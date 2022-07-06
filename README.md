@@ -260,6 +260,21 @@ Sticky Sessions
   - Public certificate must be used
   - SSL/TLS on instance and connection all the way, Single encryptes connection
   - Oe SSL/TSL on Load Balancer and SSL/TSL on instance
+
+## AWS Organizations
+is a service that enables us to create one organization for many AWS accounts.
+- Available in two feature sets:
+  - Consolidated Billing: Singgle bill in the main account, which is called the management account.
+  - All features: 
+    - Service Control Policies and tag policies
+- includes root accounts and organizations units (Ornganizational container)
+- Policies are applied to root accounts or OUs (SCP), control available permissions
+- Consolidates billing includes:
+  - Paying account: independent and cannot acess resources of other accounts
+  - Linked Accounts: all linked accounts are independent
+- Tag policy: Is the AWS Organization service that enforces tag standardization
+- Organizations API: Can be used for migrating accounts but it wulde be easier to use the console for a singule account.
+- AWS Organization console: move the account
 ## AWS WAF
 Protects against DDoS Attacks and malicious Web Traffic.
 - Atua na camanda 7 de aplicação
