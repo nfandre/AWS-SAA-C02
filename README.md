@@ -428,10 +428,22 @@ Roteador que tem um enderaçamento privado e um endereço público, serve para t
 - Nat gateway: como um aplicação, mais confiavel
  > VPC > Nat gateway - Create
 > Nat gateway é criado em uma subnet publica
-### ACL
+### NACL
 - In bound
 - Out bound
+- apply at the sybnet level
 
+### Sercurity Group
+- Instance level, network interface level
+- it can be applied to instances in any subnet
+
+### Stateful vs Stateless Firewalls
+- stateful firewall allows the return traffic automatically 
+  - thers is an implicit deny rule at the end of the ruleset
+  - Security group is a stateful firewall
+- stateless firewall checks for an allow role for both connections (inbound rule and outbound rule)
+  - it has an explicit deny  
+  - network CAL is a stateless firewall
 ### VPC Flow Logs
 VPC > actions > create flow log
 
