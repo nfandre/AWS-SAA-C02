@@ -493,7 +493,40 @@ Is a pattern and architectural pattern that you can use when use it.
 - Network traffic may go between a VPC and a remote office
 
 ### AWS Direct Connect (DX)
+It is not  shared, it's not public, it's dedicated.
+> - Private connectivity between AWS and data center/office.
+> - DX Conncetions are NOT encrypted! Use IPSec SWS VPN connection over a VIF to add encryption in transit
+> - Consistent network expirence - increased speed/latency & bandwidth/throughput
+> - Lower costs for organizzations that transfer large volumes of data
+- It has AWS Direct Connect location
+- AWS cage: rack with all equipaments 
+  - AWS Direct Connect endpoint
+- Customer/partner cage: rack with equipaments
+  - Customer/partner router
+- A Dx port must be allocated in a DX location
+- A cross-connect between the AWS DX router and the customer/partiner DX router
+- Private VIF (virtual private gateway) connects to a single VPC in the same AWS Region using VGW.
+- Public VIF can be used to connect to AWS Public services in any Region(but not the internet)
+- Multiple Private VIFs can be used to connect to multiple VPCs in the Region
 
+#### AWS Direct Connect Gateway
+DX Gateway connect to multile regions, a Private VIF is associated with the DX Gateway and then the DX Gateway is associated with VGW
+- Network traffic can be routed from on-premises to any VPC
+- DX Gateway does not allow VGWs to send traffic to each other Region
+
+#### AWS Transit Gateway
+It is cloud router and it connects VPCs and on-premises locations together using a central hub.
+- Transit Gateway is a network transit hub that interconnects VPCs and on-promeises networks
+- Specify one subet from each AZ to enable routing within the AZ
+- VPCs are attached to Transit Gateway
+
+### VPC Flow Logs
+It capture information about the IP traffic going to and from network interfaces in a VPC.
+- It can be created at the following levels:
+  - VPC
+  - Subnet
+  - Network interface
+ 
 ## Architect - Aplicações AWS
 
 ### SQS - Simple Queue Service 
