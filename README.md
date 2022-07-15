@@ -453,11 +453,46 @@ Servido que fica dentro da tupologia, sendo o único que tenha acesso a internet
 ### Direct Connect
 Roteadores da Amazon que conectam diretamente com a nuvem da AWS e fazem conexão diretamente com uma provedora de telecom (internet).
 
+### VPC Peering
+> VPC > peering connections > Create peering connection
+
 ### VPC EndPoint
-Cria uma ponte entre a VPC e os serviços AWS, ou seja, uma máquina dentro de uma VPC sem acesso a internet consegue acessar os recursos da AWS.
-- Interface endpoint
-- Gateway endpoint
+Cria uma ponte entre a VPC e os serviços AWS, ou seja, uma máquina dentro de uma VPC sem acesso a internet consegue acessar os recursos da AWS. 
+- Interface endpoint (ENI): Elatic Netword Interface with a Private IP
+  - Use DNS entries to redirect traffic
+  - Which Services: API Gateway, CloudFormation, CloudWatch etc.
+  - Security Groups
+  - each interface endoint can connect to one of many AWS services using private IP
+  
+- Gateway endpoint: A gateway that is a target for a specific route:
+  - Use previx lists in the route table to redirect traffic
+  - It can be connected with  Amazon S3 and DynamoDB only
+  - VPC Endpoint Policies
+  - example:
+  > - (S3 Gateway endpoint) user route table, it has to put a route table entry to point aour traffic to the S3 Gateway endpoint
+  > - IAM policies can be applied to endpoints
+  > - Bucket policies can limit access to endpoint source
 > VPC > Endpoint > create
+
+### AWS Cliente VPN
+Client VPN Network interfaces created in subnet
+
+### AWS Site-to Site VPN
+AWS VPN is a managed IPSec VPN
+- Use Virtual private Gateway (VGW): It is deployed on the AWS site
+- Customer gateway is deployed on the customer side
+- Supports static routes or BGP peering/routing
+- Route tables points to the VGW
+
+### AWS VPN CloudHub
+Is a pattern and architectural pattern that you can use when use it.
+- it implemented a VGW: It is deployed on the AWS site
+- Remote offices connect to the VGW in a hub-and-spoke model
+- AWS is the hub, the VPC, and the spokes go out to each of these offices
+- Each of these customers must use a unique Border Gateway Protocol Autonomous Sytem number (BSG ASN)
+- Network traffic may go between a VPC and a remote office
+
+### AWS Direct Connect (DX)
 
 ## Architect - Aplicações AWS
 
