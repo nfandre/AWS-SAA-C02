@@ -30,6 +30,7 @@ Tipos de usuários:
   - armazena tipos de arquivos equivalentes thumbnail
   
 
+
 ## Elastic Public Cloud (EC2)
 
 #### EBS - Elastic Block Store: tipos de volumes que permiete aptmizar o armazenamento
@@ -384,7 +385,7 @@ Serviço AWS para AWS, responsável pelas resoluções de endereçamento IP.
 - Name Server (NS): Armazena Start of Authority
 - POinter (PTR): Constrário do Host, dado um IP converte no Domínio DNS
 
-### Routing
+### Routing Policies
 Health check
 - #### Simple Routing
   Uma requisição de DNS para cada servidor, envia randomicamente o endereçamento IP para o HOST
@@ -399,13 +400,50 @@ Health check
   Traffic flow: idêntifica onde o tráfico está passando aplicando políticas para esse tráfico, baseado em aproximação de geolocation
 
 - #### Latency-based Routing
-  Redirecionamento feito a partir da menor latência, acessando os servidores mais próximos
+  Redirecionamento feito a partir da menor latência, acessando os servidores mais próximos, ELB
 
 - #### Multivalue Answer Routing
   Simple check with Health check
 
 - #### Weighted Routing
   - Peso de tráfego que está sendo enviado para cada servidor
+  
+### Amazon Route 53 Resolver
+It's essentially about making sure that either EC2 instances or clients in your on-premises data center are able to reslove records in both your on-promises DNS server database.
+  - Outbound Endpoint
+  - Inbound Endpoint
+
+### Amazon CloudFront 
+- CloudFront origins and Distributions 
+- CloudFront caching and behaviors 
+  - Regional Edge Caches
+  - Decreasing the TTL(Time to live) is best for dynamic content, increasing TTL is better for performance(and reduces load on origin)
+
+### Signed URLs 
+- Signed URs provide more control over access to content
+- Can specify beginning and expiration date and time, IP addresses/ranges of users
+- Signed URLs should be used for individual files and clients that don't support cookies
+- Only it is used for a single object
+### Signed Cookies
+- Similiar to Signed URLs
+- Use signed cookies when you don't want to change URLs
+- It is used for multiple objects 
+### Origin Access Identities(OAIs)
+- is used with S3, it's not used with EC2
+
+
+### SS/TLS and SNI (Server Name Indication)
+SNI is a method where able to have multiple SSL/TLS certificates which correspond with different domain names running on the same IP address on CloudFront.
+ - Multiple certificates share the same IP with SNI
+
+### Lambda@Edge
+it allows to run Node.js and python Lambda functions to customize the content CloudFront delivers
+- Executes functions closer to ther viewer
+
+### AWS Global Accelerator 
+It is a networking service that allows to utilize the AWS Global Network to send data to your applications. It means that you are avoiding the internet for a large parth of the data transfer
+- Better bandwith and latency
+- consistency 
 
 ## Virtual private cloud (VPC)
     default VPC X Custom VPC
@@ -414,11 +452,14 @@ Conceitos importantes:
 - No TRANSIT entre VPCs: permite apenas conexão direta
 - ACL -> stateless - Deny && Allow
 - SEC GROUPS -> stateful - apenas Allow
+- It's region wide
 > https://medium.com/awesome-cloud/aws-difference-between-security-groups-and-network-acls-adc632ea29ae#:~:text=Security%20groups%20are%20tied%20to,assigned%20explicitly%20to%20the%20instance.
 
 Fluxo até internet Gateway
 > Subnet > ACL > Routing Table > Router > Internet Gateway
 
+Router
+> Routers interconnect subnets and direct traffic between Internet gateways, virtual private gateways, NAT gateways and subnets
 ### NAT - Network address translation
 Roteador que tem um enderaçamento privado e um endereço público, serve para transcrever um ip privado para um ip público de forma que este tenha acesso a rede.
 
