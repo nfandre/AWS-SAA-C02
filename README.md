@@ -261,6 +261,33 @@ Sticky Sessions
   - Public certificate must be used
   - SSL/TLS on instance and connection all the way, Single encryptes connection
   - Oe SSL/TSL on Load Balancer and SSL/TSL on instance
+  
+## Block and File Storage
+
+#### Block-based storage Systems (Elastic Block Store EBS)
+- Hard disk drive (HDD)
+- Can create volumes, it can be partitioned and formatted
+- Block level
+- EBS volume within a single availability zone
+- It can't connect mulitiple instances in the same volume
+- it persists indenpently of the life instance
+- it does not need to be atacched to an instance
+
+
+### EBS Multi Attached
+- it does allow connecting from multiple instances in the same A-Z
+- Avaible for Nitro system-based instances
+
+#### File-based storade systems (EFS)
+- Network Attached Storage
+- The NAS "shares" filesystems over the network
+- The OS sees a filesysten that is mapped to a local drive letter
+- read and write data, it can't formart in OS
+
+#### Object Storage Systems (S3)
+- Obect storage container
+- upload using HTTP Protocol
+- There is no hieararchy
 
 ## AWS Organizations
 is a service that enables us to create one organization for many AWS accounts.
