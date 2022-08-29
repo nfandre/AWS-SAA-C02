@@ -272,22 +272,68 @@ Sticky Sessions
 - It can't connect mulitiple instances in the same volume
 - it persists indenpently of the life instance
 - it does not need to be atacched to an instance
-
+- Types EBS ssd-backed volumes:
+  - gp (general purpose)
+  - io (Provisioned IOPS SSD) iops(Input/Output per Second)
+  - Throughput Optimized HDD
+  - Cold HDD
+- EBS volume data persists indepedently of the life of the instance
+- EBS volumes do not need to be attached to an instance
 
 ### EBS Multi Attached
 - it does allow connecting from multiple instances in the same A-Z
 - Avaible for Nitro system-based instances
 
 #### File-based storade systems (EFS)
+- It is an implementation of file-based storage system NFS protococol, the Network File System
 - Network Attached Storage
 - The NAS "shares" filesystems over the network
 - The OS sees a filesysten that is mapped to a local drive letter
 - read and write data, it can't formart in OS
-
+- it is only avialble for Linux instances
 #### Object Storage Systems (S3)
 - Obect storage container
 - upload using HTTP Protocol
 - There is no hieararchy
+
+#### EBS Snapshots and DLM (Data Lifecycle Manager)
+Tt is way that automate the backups
+
+#### EBS vs instance store
+Instance store volumes are physically attached to the host.
+- it's extremely high performance
+- Instance Store are ephemeral: data is lost when the instance powered down
+- non-persistent
+- caches, buggers and temporary storage
+
+### RAID with EBS
+RAID stands for redundant Array of independnet disks, it is  essentially a way that we can take multiple disks and aggregate them together
+
+### Amazon Machine Images (AMIs)
+it provides the information required to lounch an instance
+- Community AMIs - free to use, generally for select the operating system
+- AWS Marketplace AMIs - pay to use, generally come packaged with additional, licensed software
+
+#### EC2 Image builder
+it is free tool that can be used to create images, customize the software installed on them and secure images
+
+#### Amazon FSx
+It provides fully managed third-party file systems. There is tow file systems:
+- Amazon FSx for windows
+- Amazaon FSx for Lustre for compute-intensive workloads
+  - Works natively with S3
+
+#### AWS Storage Gateway
+It is a service that enables you to connect you on-premises storage to AWS.
+- File Gateway: a virtual on-premises file server
+  - the file system is mounted using NFS or SMB
+- Volume Gateway: 
+  - Cached volume mode: a cache of the most recently used data on-premise and the entire data set is stored in S3
+  - Stored volume mode: the entire data set is stored on-premise and data backed up as point-in-time snapshots
+- Tape Gateway
+
+#### AWS Backup
+It is a service that can be used to create schedules for backing up multiple AWS resources
 
 ## AWS Organizations
 is a service that enables us to create one organization for many AWS accounts.
