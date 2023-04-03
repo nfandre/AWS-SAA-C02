@@ -401,8 +401,9 @@ it is a way that can specify the number of tasks to run at any time
 - An ECS Services are used to maintain a desired count of tasks
 
 #### ECS Container instance
+It is EC2 instance running the ECS agent (manage hosts, container hosts,)
 - Two types of lounch type:
-  - serveless: where it doesn't see any container instances and doens't managem them
+  - serveless(Fargate): where it doesn't see any container instances and doens't managem them
   - EC2 instances within your account: it is possible lounch manage, it has more operational control
   
 #### ECS Key Feature
@@ -411,6 +412,40 @@ it is a way that can specify the number of tasks to run at any time
 - Docker suport: run and manage docker containers with integration into the Docker compose CLI
 - Elastic Load Balancing integration -distribute traffic across containers using ALB or NLB
 - Amazon ECS Anywhere(NEW): enables the use of Amazon ECS control plane to manage on-premises implementations
+
+#### Launch Types
+- EC2: Container instances are Amazon EC2 instances running in your account 
+  > ECS EC2 Cluster > EC2 Service > ECS container instance
+  - Explicity provision EC2 instances
+  - You are responsible for managing EC2 instances
+  - Charged per runnint EC2 instance
+  - Docker volumes, EFS, and ESx for Windows  File Server
+  - You handle cluster optimiztion
+  - More granular control over infrastructuring
+- Fargate
+  > ECS Fargate Cluster > ECS Service > Task
+  - Fargate automatically provisions resouces 
+  - Fargate provisions and manages compute
+  - charged for running tasks
+  - EFS integration
+  - Fargate handles cluster optimization
+  - limited control, infrastructure is automated
+  
+#### ECS and IAM Roles
+ECS Cluster: 
+  - IAM instance Role (stay inside of ECS Container Service), The container instance IAM role provides permissions to the host.
+    - It provides the permissions which the container needs
+    
+  - IAM Task Role ( It assigned to the task), it provides permissions to the container instance, not to the host.
+  
+  - Container instances have access to all of the permissions that are supplied to the container instance role through instance metadata
+    >   OBS: Permissions assigned to the instance role are also supplied to the tasks that are running on top of the instance
+
+ECS Fargate:
+  - IAM Task role: with the Fargate launch type only IAM task roles can be applied
+  - Task roles are defined in the task defintion or in the run task API
+
+    
 ## AWS Config
 Dedo duro, permite avaliar(auditar) recursos para garantir conformidade e seguir diretrizes.
 - Monitoramento contínuo
