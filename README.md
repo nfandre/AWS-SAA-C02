@@ -354,7 +354,7 @@ Protects against DDoS Attacks and malicious Web Traffic.
 - Atua na camanda 7 de aplicação
 - Filtrar tráficos de origens (ex: países\)
 
-## ECS
+## ECS - Amazon Elastic Container Service
 Serviço de orquestração de containers
 - Cluster EC2 ou Cluster AWS Fargate
 
@@ -368,6 +368,49 @@ Integra com:
 
 Task definitions ( Usado para configurar porta, autoscaling, ELB), pode ser feito com YAML.
 
+
+#### Docker Containers vs Server Virtualization
+- Every VM/instance needs an operating system wich uses significant resources
+- hypevisor e VM vs Docker Engine and OS
+- Each container is isolated form other containers
+- A container includes all teh code, settings, and depedencies for running the application, and it can run on the same underlying operating system because of their isolatino
+- Container is tiny in coparison to an entire virtual machine
+- Container don't use a hug amount of processing power or memory because don't have that operating system in each container
+
+#### Monolithic Application vs Microservices
+- Monolithic application run all components in the same hoost(the user interface, business logic, and data access layer are combined on asingle pratform)
+- On the microservices application all the compnents are separeted
+- A microservice is iindependently deployable unit of code 
+- Microservices are often loosely coupled
+- Containers can also be spread across multiple underlying hosts
+- Many instances of each microservice can run on each host
+
+### ECS architecture
+
+#### ECS Cluster
+It is a logical grouping of tasks or services
+#### Task
+An ECS Task is a running Docker container
+- It is craeted from a Task Definition: it config using Task Definition
+
+#### Amazon Elastic Container Registry (AmazonECR)
+It is a place where is registried images and can pull imagens over the internet ( Docker Uber is on example too)
+
+#### ECS Services 
+it is a way that can specify the number of tasks to run at any time
+- An ECS Services are used to maintain a desired count of tasks
+
+#### ECS Container instance
+- Two types of lounch type:
+  - serveless: where it doesn't see any container instances and doens't managem them
+  - EC2 instances within your account: it is possible lounch manage, it has more operational control
+  
+#### ECS Key Feature
+- Serveless with AWS Fargate: managed for you and fully scalable
+- Fully managed container orchestration: control plane is managed for you
+- Docker suport: run and manage docker containers with integration into the Docker compose CLI
+- Elastic Load Balancing integration -distribute traffic across containers using ALB or NLB
+- Amazon ECS Anywhere(NEW): enables the use of Amazon ECS control plane to manage on-premises implementations
 ## AWS Config
 Dedo duro, permite avaliar(auditar) recursos para garantir conformidade e seguir diretrizes.
 - Monitoramento contínuo
