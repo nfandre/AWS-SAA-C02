@@ -445,7 +445,29 @@ ECS Fargate:
   - IAM Task role: with the Fargate launch type only IAM task roles can be applied
   - Task roles are defined in the task defintion or in the run task API
 
-    
+#### Scaling Amazon ECS
+There is two types of scaling:
+  - Service auto scaling: Service automactically adjusts the desired task count up ou down using the Application Auto Scaling service
+    - supports target tracking, step, and scheduled scaling policies 
+    - Suports the following types of scaling policies:
+      - Target Tracking Scaling policies: Increase or decrease the number of tasks that your service runs bases on a target value for a epecific CloudWatch metric
+      - Step Scaling Policies: incriease or decrease the number of tasks that your service runs in response to CloudWatch. Step scaling is based on a set of scaling adjustments, known as step adustiments, which vary based on the size of the alarm breach
+      - Scheduled Scaling: increase or decrase the number of tasks that your service runs based on the date and time
+        
+  - Cluster auto scaling: uses a Capacity Provider to scale the number of EC2 cluster instances using EC2 Auto Scaling
+    - Uses an ECS resource type called a Capacity Provider
+    - A Capacity Provider can be associated with an EC2 Auto Scaling Group (ASG)
+    - ASG can automatically scale using:
+      - Managed scaling: with an automatically-created scaling policy on your ASG
+      - managed instance termination protection: which enables container-aware termination of instances in the ASG when scale-in happens
+
+#### ECS with Applicaton load balance(ALB)
+- Dynamic port is allocated ont the host
+- Each task can be running a webservice at the same port
+- All connections to webservices comming into HTTP listener (port 80), but then, they are getting distributed to the host ports, and then when tehi come in on a specific host port, the container instance knows which container it.
+OBS: if we have our containers runnig in a private subnet, we should have NAT gateway in a public subnet and an aentry in the route table for the private subnet
+  - NAT gateway required for tasks in private subnets to access the internet
+
 ## AWS Config
 Dedo duro, permite avaliar(auditar) recursos para garantir conformidade e seguir diretrizes.
 - Monitoramento contínuo
