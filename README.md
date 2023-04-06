@@ -467,6 +467,47 @@ There is two types of scaling:
 - All connections to webservices comming into HTTP listener (port 80), but then, they are getting distributed to the host ports, and then when tehi come in on a specific host port, the container instance knows which container it.
 OBS: if we have our containers runnig in a private subnet, we should have NAT gateway in a public subnet and an aentry in the route table for the private subnet
   - NAT gateway required for tasks in private subnets to access the internet
+  
+#### Amazon Elastic Kubernetes Service (EKS)
+It is a managed service for running kubernetes applications in the cloud or on-premises
+- Kubernetes is an open-source system for automating deployment, scaling, and management of containerized applications
+- EKS is used when you need standardize container orachestration across multiple environments using a managed Kubernetes implementation
+- Features:
+  - Hybrid deployment: manage Kubernetes clusters and applications across hybid environments (AWS + On-premises)
+  - Batch processing: run sequential or parallel batch workloads on your EKS cluster using Kubernetes Jobs API. Plan, schedule and execute batch workloads
+  - Machine Learning: use Kubeflow with EKS to model your machine learning workflows and efficiently run distributed training jobs using the latest EC2 GPU-powered instances, including inferentia
+  
+- Managed Kubernetes Service: runs on EC2/ Fargate and also AWS Outposts
+> Region > VPC > Availabilty Zones (public subnet) > ECS Cluster > EKS Control Plane & Worker Nodes
+
+- EKS Supports load balancing with ALB, NLB, CLB
+- Groups of containers are known as Pods in Kubernetes
+- Cluster Auto Scaling Details:
+  - Vertical Pod Autoscaler: automatically adjusts the CPU and memory reservations for your pods
+  - Horizontal Pod Autoscaler: automcatically scales the number of pods in a deployment, eplicaton controller, or replica set based on that resource's CPU utilization
+
+Workload Auto Scaling Details:
+- Amazon EKS supports two autoscaling products:
+  - Kubernetes Cluster Autoscaler: use AWS scaling groups
+  - Karpenter open souce autoscaling project: works directly with the Amazon EC2 fleet
+  
+Amazon EKS Elastic Load Balancing
+- The AWS Load Balancer Controller manages AWS Elastic Load Balancrs for a Kubernetes cluster
+- Install the AWS Load Balancer Controller using Helm V3 or later or by applying a Kubernetes manifest
+- The controller provisions the following resources:
+  - An AWS Applicaton Load Balancer (ALB) when you create a Kubernetes Ingress
+  - An AWS Network Load Balancer (NLB) when you create a Kubernetes service of type LoadBalancer
+  
+Amazon EKS Distro:
+  - it is a destibution of Kubernetes with the same dependencies as Amazon EKS
+  - Allows you to manually run Kubernetes clsters anywhere
+  - includes binaries and containers of open-source Kubernetes, etcd, networking, and storage plugins, tested for compatibility
+  - You can securely access EKS Distro releases as open source on GitHub or within AWS via Amazon S3 and Amazon ECR
+  
+Amazon ECS and EKS Anywhere:
+- Run ECS or EKS on costumer-managed infrastructure, supported by AWS
+- Customers can run Amazon ECS/EKS Anywhere on their own on-premises infrastructure on bare metal servers
+- Or you can also deploy ECS/EKS Anywhere using VMware vSphere
 
 ## AWS Config
 Dedo duro, permite avaliar(auditar) recursos para garantir conformidade e seguir diretrizes.
