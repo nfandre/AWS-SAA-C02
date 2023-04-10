@@ -509,6 +509,20 @@ Amazon ECS and EKS Anywhere:
 - Customers can run Amazon ECS/EKS Anywhere on their own on-premises infrastructure on bare metal servers
 - Or you can also deploy ECS/EKS Anywhere using VMware vSphere
 
+#### Amazon Elastic Container Registry (ECS)
+- It is a fully-managed container registry
+- Integrated with Amazon ECS and Amazon EKS
+- Supports Onpen Container Initiative(OCI) and Docker Registry HTTP API V2 standards
+- It can be accessed from any Docker environment - in the cloud, on-premises or on you machine
+- Container images and arifacts are stored in S3
+
+#### Amazon App Runner
+it is a Fully managed service for deploying containerized web app and APIs.
+> aws apprunner create-service --service-name my-simple-service --source-configuration (Github Repo or ECR Registry(image))
+
+- PaaS solution with all components managed - just bring your cod and container image
+
+
 ## AWS Config
 Dedo duro, permite avaliar(auditar) recursos para garantir conformidade e seguir diretrizes.
 - Monitoramento contínuo
