@@ -836,14 +836,68 @@ Sistema de notificação
 - Email
 - HTTP
 
-## Serverless Lambda 
+## Serverless  
 - "Sem servidor"
 - Scaling por conta da AWS
 - Pricing:
   - 1 Milion Requests = FREE
   - 0,20R$ por cada 1M de requisições
   > https://aws.amazon.com/pt/lambda/pricing/
+  > 
+### Serverless Services and Event-Driven Architecture
+Serverless is a concept in which it doesnt't manage the underlying servers
+- Event-driven architecture is an architectural pattern. it leverages technology where it has an event happen in one service that then triggers something that rappens in another service
+- With serverless there are no instances to manage
+- It doesn't need to provision hardware
+- There is no management of operating system or software
+- Capacity provisioning and patching is handled automatically
+- Provides automatic scaling and high availability
+- it can be very cheap
+
+### AWS Lambda
+It is AWS serverless compute service, and it's a service that we can use in event driven architectures for running code based on triggers.
+- Event occurs: Source can be CLI, API, SDK or a trigger
+- Lambda functions have a maximum exectuion time of 15 minutes
+  - It run if you have code that needs to run for a relatively short period of time, less then 50 minutes or maybe just a few seconds
+- AWS Lambda executes code only when needed and scales automatically
+- You pay only for the compute time you consume (you pay nothing when your code is not running)
+- Benefits of AWS Lambda:
+  - No servers to manage
+  - Continuous scaling
+  - Millisecond billing
+  - Integrates with almost all other AWS services
   
+- Primary use cases for AWS Lambda:
+  - Data processing
+  - Real-time file processing
+  - Real-time stream processing
+  - Build serverlesss backend for web, mobile, IOT, and 3rd party API requests
+  
+#### Lambda Fucntion Invocations
+- Synchronous:
+  - CLI, SDK, API Gateway
+  - Wait for the function to process the envent and return response
+  - Erro handling happens client side (retries, exponential backoff etc)
+- Asynchronous:
+  - S3, SNS, CloudWatch Events etc.
+  - Event is queued for processing and a response is returned immediately
+  - Lambda retries up to 3 times
+  - Procssing must be idempotent(due to retries)
+  
+- Event source mapping: 
+  - SQS, Kinesis Data Streams, DynamoDP Streams
+  - Lambda does the polling (polls the source): so lambda is checking with thes sources to find it there is anything that needs to be processed
+    - EX: In the case of as it is looking into a Queue and sayng, are there any messages to process with data streams?
+  - Lambda does the job of actually try to find things to execute
+  - Records are processed in order (except fo SKS standard, becaus it doesn't  orther the records correctly)
+  
+#### Lambda will actually scale concurrently
+So what means is you execute your function, and multiple instances of the function cun be executed in paralles. So if one execution hasn't completed all thoese different data to process, then Lambda will execute multiple concurrent instances of your US Lambda function.
+- Additional functions are initialized up to the burst or account limit
+- Burst concurrency quotas:
+  - 3000 Us West(Oregon), US East (N. Virginia) Europe (Ireland)
+  - 1000 Asia Pacific (Tokyo), Europe (Frankfurt), US East (Ohio)
+  - 500 - Other Regions
 ## Cloud Formation
 Cria a partir de códigos (template) as configurações de serviços na AWS (EC2, S3 etc)
 - Benefícios:
