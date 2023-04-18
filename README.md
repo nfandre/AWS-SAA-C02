@@ -403,11 +403,11 @@ it is a way that can specify the number of tasks to run at any time
 #### ECS Container instance
 It is EC2 instance running the ECS agent (manage hosts, container hosts,)
 - Two types of lounch type:
-  - serveless(Fargate): where it doesn't see any container instances and doens't managem them
+  - serverless(Fargate): where it doesn't see any container instances and doens't managem them
   - EC2 instances within your account: it is possible lounch manage, it has more operational control
   
 #### ECS Key Feature
-- Serveless with AWS Fargate: managed for you and fully scalable
+- Serverless with AWS Fargate: managed for you and fully scalable
 - Fully managed container orchestration: control plane is managed for you
 - Docker suport: run and manage docker containers with integration into the Docker compose CLI
 - Elastic Load Balancing integration -distribute traffic across containers using ALB or NLB
@@ -798,14 +798,6 @@ It capture information about the IP traffic going to and from network interfaces
  
 ## Architect - Aplicações AWS
 
-### SQS - Simple Queue Service 
-Serviço simples de fila, sistema de mensagens que são armazenados em um aplicativo, geralmente máquinas EC2.
-- Standard: Não possui ordem de envio, não é em sequência e pode ser duplicada.
-- FIFO: Garantia de entrega em sequência
-> https://docs.aws.amazon.com/pt_br/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html
-- #### Pull base
-  É solicitado informações para o SQS, e o mesmo retorna quem está na fila.
-
 ### Simple Workflow Service
 Conjunto de tarefas que devem ser executadas em uma ordem específica. Gerencia o workflow tasks de um sistema.
 - Pode se extender até 10000 mil tarefas
@@ -843,7 +835,7 @@ Sistema de notificação
   - 1 Milion Requests = FREE
   - 0,20R$ por cada 1M de requisições
   > https://aws.amazon.com/pt/lambda/pricing/
-  > 
+  
 ### Serverless Services and Event-Driven Architecture
 Serverless is a concept in which it doesnt't manage the underlying servers
 - Event-driven architecture is an architectural pattern. it leverages technology where it has an event happen in one service that then triggers something that rappens in another service
@@ -898,6 +890,79 @@ So what means is you execute your function, and multiple instances of the functi
   - 3000 Us West(Oregon), US East (N. Virginia) Europe (Ireland)
   - 1000 Asia Pacific (Tokyo), Europe (Frankfurt), US East (Ohio)
   - 500 - Other Regions
+  
+### Application Integration Services Overview
+
+| Service | Whatit does | Example use cases | application |
+| ------- | ----------- | ----------------- | ----------- |
+| **Simple Queue Service** | Messaging queue; store and foward patterns| Building distributed/ decoupled applications | Lambda/ EC2
+| **Simple Notification Service** | Set up, operate, and send notifications from the cloud | Send email notification when CloudWatch alarm is triggered | Lambda
+| **Step Functions** | Out-of-thebox cooordination of AWS service components with visual worflow | Order processing workflow | |
+| **Simple Workflow Service** | Need to support external processes or specialed execution logic (old version of Step Functions) |  |
+| **Amazon MQ** | It is much like the SQS service. Message broker service for Apache active MQ and RabbitMQ | Need a message queue that supports industry standard APIs and protocols; migrate queues to AWS | |
+| **Amazon Kinesis** | Collect, process, and analyze streaming data. | Collect data from IoT devices for later processing | |
+
+
+### SQS - Simple Queue Service
+Serviço simples de fila, sistema de mensagens que são armazenados em um aplicativo, geralmente máquinas EC2.
+- Standard: Não possui ordem de envio, não é em sequência e pode ser duplicada.
+- FIFO: Garantia de entrega em sequência
+> https://docs.aws.amazon.com/pt_br/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html
+- #### Pull base
+  É solicitado informações para o SQS, e o mesmo retorna quem está na fila.
+
+#### Decoupling with SQS Queues
+Decoupling vs direct integration
+- Direct integration
+  - Web tier connects directly to app tier
+  - App tier must keep up with workload or failuer will occur
+- Decoupled Integratioin
+  - SQS Queue in the middle 
+  - Web tier is sending messages to the US Queue, then teh app tier is going to process those messages
+  - EC2 instance polls SQS
+  
+#### SQS Queue Types
+**Standard Queue**
+- Best-effort ordering,  orders is not guaranteed
+- Unlimited Throughput: it suport a nearyly unlimited number of transactions per second per API action 
+- At-Least-Once Delivery: A message is delivered at least once, but occasionally more then one copy of a message is delivered
+
+**FIFO Queue**
+- First-int, First-out Delivery: The order in which messages are sent and receive is strictly preserved
+- High Throughput: it support up to 300 messages per second (300 send, receive, or delete operations per second). When you batch 10 messages per operation (maximum), FIFO queues can support up to 3000 messages por second
+- Exactly-Once Processing: A message is delivered once and remains available until a consumer processes and deletes it. Dupicates are note introduced into the queue
+- It requires the **Message Group ID** and **Message Deduplication ID** parameters to be added to messages
+  - Message Group ID: the tag specifies that a message belongs to a specific message group Messages that belong to the same message group are guaranteed to be processed in a FIFO manner
+  - Message Deduplication ID: The token used for deduplication of messages within the deduplication interval
+  
+#### SQS - Dead Letter Queue (Configuration)
+- Dead-letter queue is a standard or a FIFO queue that has been specified as a dead-letter queue
+
+> if a Message not processed successfully (ReceiveCount exceeds maxReceiveCount for queue)
+> - consumers are trying to process the message multiple times, but it's failing
+> - it is did a copy of that message and moved into a dead letter queue
+
+- The main task of a dead-letter queue is handling message failure
+- A ddead-letter queue lets you set aside and isolete messages that can't be processed correctly to determine why their processing didn't succeed
+ 
+#### SQS - Delay Queue Concept
+- It can delay the visibility of the message
+- message cannot be returned on the visibility timeline, after the delay message has expired, the messages beconmes visible and it can be accessed
+
+#### SQS Long Polling vs Short Polling Concepts
+Polliing is where your consumer is trying to find messages in the queue
+
+Long Polling: 
+- It is a way to retrieve messages from SQS  queues - waits for messages arrive
+-  Waits for the WaitTimeSeconds and eliminates empty responses
+- It can lower costs
+- It can be enables at the queue level or at the API level using **WaitTimeSeconds**
+- It is effect when the Receive Message Wait Time is a value greater than 0 seconds and up to 20 seconds
+Short Polling:
+- It returns immediately (even if the message queue is empty)
+- Checks a supset of servers and may not return all messages
+
+   
 ## Cloud Formation
 Cria a partir de códigos (template) as configurações de serviços na AWS (EC2, S3 etc)
 - Benefícios:
