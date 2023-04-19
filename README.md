@@ -806,9 +806,6 @@ Conjunto de tarefas que devem ser executadas em uma ordem específica. Gerencia 
 ### Elastic Transcoder
 Converte mídias para formatos específicos (MP4,MP3,HD).
 
-### API Gateway
-Faz um serviço de "Load Balancer" para aplicações, portão de entrada para softwares que acessam de forma programática os serviços da AWS.
-
 ### Kinesis
 Responsável por coletar, armazenar e analizar dados de streaming para serem analisados ou utilizados por outra aplicações. Armazena em shad(partes).
 - Streams: recebe os dados e armazena para que depois outros serviços possam consumi-los.
@@ -820,13 +817,7 @@ Web Identity Federation, permitir ou bloquear acesso de acordo com uma credencia
 - User Pool: Retorna autenticação do User.
 - Identity Pool: Retorna o que pode ou não pode acessar
 
-### SNS - Simple Notification Service
-Sistema de notificação
-- Push
-- SMS
-- Text Message
-- Email
-- HTTP
+
 
 ## Serverless  
 - "Sem servidor"
@@ -962,7 +953,100 @@ Short Polling:
 - It returns immediately (even if the message queue is empty)
 - Checks a supset of servers and may not return all messages
 
+### SNS - Simple Notification Service
+Sistema de notificação
+- Push
+- SMS
+- Text Message
+- Email
+- HTTP
+
+It's a publisher/subscriber system. It has a publisher and that publisher will produce some kind of information that it sends to an SNS topic.
+
+- Event producer sends one messages to one SNS topic
+- Amazon SNS will tehn foward via diffrent transport protocols to the subscribers (HTTP/HTTPS, Email/Email-JSON, SMS)
+- Multiple recipients can be grouped using Topics:
+  - a Topici is an "access point" for allowing recipients to dynamically subscribe for identical copies of the same notification
+
    
+#### Amazon SNS + Amazon SQS Fan-Out
+- It can subscribe one or more Amazon SQS queues to an Amazon SNS topic
+- Amazon SQS manages the subscription and any necessary permissions
+- When you publish a message to a topic, Amazon SNS sends the message to every subscribed queue
+
+### AWS Step Functions
+It is a service that coordinates the components of an application.
+- It used to build distributed applications as a series of steps in a visual workflow
+- It is possible quickly build and run state machines to execute the steps of your application
+- How it works:
+  - Define the steps of your workflow in the JSON-based Amazon States Language. The visual console automatically graphs each step in the order of execution.
+  - Start an exectuion to visualize and verify the steps of your application are oprating as intended. The console highlights the real-time status of each step and provides a detailed history of every exectution
+  - It operates and scales the steps of your application and underlying compute for you to help ensure your apllication executes reliably under increasing demand 
+
+### Amazon EventBridge
+It is a serverless event bus, it is useful for building distribueted event-driven applications.
+- Event Sources:
+  - AWS Services
+  - Custom Apps
+  - SaaS
+  
+- State changes to those resources get sent as events to what we call an EventBridge event bus
+- The information is processed by rules and those rules can then send information through to varius destinations (lambda, kinesis or  AWS Config)
+- those receivers is known as targets
+
+### Amazon API Gateway
+Faz um serviço de "Load Balancer" para aplicações, portão de entrada para softwares que acessam de forma programática os serviços da AWS.
+
+It is a servcie that you can use to create applicaton programming interfaces, and those are essentially the front door to your business logic or your applications on AWS
+- It supports restful APIs, including rest APIs and HTTP APIs as well as web socket APIs.
+- Think of the API Gateway as the endpoint with which you can connect various internet-based services or also services within your VPC
+
+#### Amazon API Gateway Deployment Types
+- Edge-optimized endpoint
+  - it is actually sittin behind Amazon CloudFront, so it is utilizing the CloudFront edge locations and teh CDN capabilities of CloudFront.
+    - AWS Cloud > Amazon CloudFront > Amazon API Gateway
+  - Key benefits: Reduced latency for requests from around the world
+  
+- Regional endpoint
+  - It is better if your services are coming from the same region
+    - Region > Services in same region > Amazon API Gateway
+  - Key Benefits:
+    - Reduced latency for requests that originates in the same region
+    - Can also configure your own CDN and protect with WAF
+  
+- Private endpoint
+  - This will be fully within VPC, so it is a way of securely exposing your APIs only to services in the VPC or applications that are connected via a Direct Connect link
+  - VPC > Services in same VPC > Amazon API Gateway
+  - Key benefits:
+    - Securely expose your REST APIs only to other services within your VPC
+  
+> EX:    SEND: Web App > Published API Gateway > Method Request > Integration Request > Endpoint
+
+> EX:   RECEIVE: Web App > Published API Gateway < Method Response < Integration Response < Endpoint
+
+#### API Gateway Integrations
+For a Lambda function:
+- Lambda proxy integration
+- Lambda custom integration
+
+For an HTTP endpoint:
+- HTTP proxy integration
+- HTTP custom integration
+
+For an AWS service action:
+- AWS integration of the non-proxy type only
+
+#### API Gateway - Caching
+It can add caching to API calls by provisioning an Amazon API Gateway cache and specifying its size in gigabytes
+- Caching allows to cache the endpoin's response
+- Caching can reduce number of calls to the backend and improve latency of requests to the API
+
+#### API Gateway - Throttling 
+It can also throttle the APIs, it sets a limite on a steady-state rate and a burst of request submissions aganinst all APIs in your account
+
+#### API Gateway - Usage Plans and API Keys
+API Key - Users connect to specific public endpoint with API key that is configured in a usage plan
+
 ## Cloud Formation
 Cria a partir de códigos (template) as configurações de serviços na AWS (EC2, S3 etc)
 - Benefícios:
