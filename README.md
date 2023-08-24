@@ -556,18 +556,127 @@ Backups:
   - Amazon RDS > databases > modify > backup
 - DB snapshot: manual 
   - Amazon RDS > actions > take snapshot --> snapshots
-      
-#### Dynamo DB
-- Latência baixa (milisegundos)
-- Documentos -> key value
-- APP Web/ mobile/ games
-- SSD
-- Armazenamento em 3 ou mais data centers
-- Consistent Reads x Strongly consistent reads
-  - Consistent Reads: Write/read maior que 1 segundo
-  - Strongly consistent reads: Write/read menor que 1 segundo
+ 
+### Amazon RDS
+It is a relational database that runs on EC2 instances, so it must choose an instance type
+- Use EC2 instances
+- Relational databases
+- RDS is OLTP(Online Transaction Processing) type of database
+- highly avilable, fault tolerant and scalable
+- Commum use cases include stores and banking systems
+- Encrypt Amazon RDS instances and snapshots
+  - It uses AWS Key mangement Service (KMS)
+RDS suports
+- Amazon Aurora
+- MySQL
+- MariaDB
+- Oracle
+- SQL Server
+- Postgres
+
+#### Amazon RDS Scaling Up (Vertically)
+It is when we change our instance type (db.m4.large to > db.m4.2xlarge)
+#### Disaster Recovery(DR) and Scaling Out (Horizontally)
+- High availability
+- Fault tolerance
+
+- #### Multi-AZ
+  It creates a passive standby Primarily used for disaster recovery (DR)
+  - RDS Master > primary database
+  - RDS Standby > Synchrnous replication, always in sync with the master
+
+- #### RDS Read Replica
+  RDS Read Replica > Asynchronous replication, there is a little more delay
+  - It is used for scaling database queries (reads) (escalonar leituras), it means scaling the queries(consulta) on your data base
+  - All writes (Records) are going to master, but reads can instead go the read replica so thate we can scale
+
+#### Amazon RDS Automated Backups
+- Backs up the entire DB instance, not just individual databases
+- For single-AZ DB instances there is a brief suspention
+- For Multi-AZ SQL Server, I/O activity is briefly suspended on primary
+- For Multi-AZ MariaDB, MySQL, Oracle and PostgreSQL the snaphot is taken from standby
+- Snapshots do not expire(no retention period)
+
+#### Amazon RDS Security
+- RDS SG
+- SSL/TLS encryption in-transit
+- RDS encryption at rest AES 256-bit encryption (repouso)
+  - incluedes DB storage, backups, read replicas and snaphots
+- it can only enable encryption for an Amazon RDS DB instance when you creat it, not after DB instance is created
+- Uses AES 256 encryption and encryption is transparent with minimal performance impact
+- AWS KMS is used for managing encryption keys
+- DB instances that are encrypted can't be modified to disable encryption
+- The read replica will always have the same encryption status as the primary
+
+- How to do an unencrypted to be encrypted? copy a snapshot(EBS Volume unencrypted) to copy a snapshot(encrypted) and run a new RDS instance encrypted with new endpoint
+
+#### Aurora
+It has two differente engines, Mysql or postgres
+- It is up to five times faster than standard MySQL databases and three times faster than standard PostgreSQL databases
+- it is distributed, fault-tolerant, self-healing storage system that auto-scales upt ot 129TB
+- Aurora replicas are within a region, it can be in diferrent availability zones, but they are always within a region
+- Aurora Fault Tolerance
+  - Fault tolerance across 3AZs
+  - Single logical volume
+  - scale-out read requests
+  - can promote Aurora replica to be new primary or create new primary
+  - can use Auto Scaling to add replicas
+- Key Features  
+  ![Screenshot](./images/RDS/amazon-aurora-key-features.png)
+- Amazon Aurora Replicas
+  ![Screenshot](./images/RDS/amazon-aurora-replicas.png)
+- Deployment Options with Amazon Aurora
+  ![Screenshot](./images/RDS/aurora-fault-tolerance.png)
   
-#### Elasticache
+- Cross-Region with Aurora Mysql
+  ![Screenshot](./images/RDS/cross-region-replica-aurora-mysql.png)
+  
+- Aurora Global Database
+  ![Screenshot](./images/RDS/aurora-multi-global.png)
+- Aurora Serveless
+  - Infrequently used application
+  - New applications (who don't know about performance)
+  - Variable workloads - performance profile is very variable
+  - Unpredictable workloads
+  - Development and test databases
+  - Multi-tenant applications
+  
+- criada 2014
+- compatibilidade com mysql oracle
+- 5x Faster
+- 10x barata
+- Default 10gb -> autoscaling automatico (646GB) -> 64TB
+- criação de replicas (read) x15
+- Recover -> Point in-time
+- Backup continuo -> 3 zonas
+
+#### Amazon RDS Proxy
+- It is a fully managed database proxy for RDS
+- Highly available across multiple AZs
+- Icreases Scalability, fault tolerance, and security
+- Commom use: Serveless, lambdas functions that are scaling independently
+  - Connection Pool
+  - Reduces stress on CPU/MEM
+  - Shares infrequently used connections
+  - Drives increased effec
+  - Control authentication methods
+  
+#### Amazon RDS Anti-Patterns and Alternatives
+if we're presented with some requirements for a database of some sort, when would we ot use RDS?
+- When NOT use Amazon RDS (Anti-patterns)
+  - Anytime you need a DB Type other than:
+    - MySQL
+    - MariaDB
+    - SQL Server
+    - Oracle
+    - PostgreSQL
+    
+  - you need root acess to the OS
+  
+![Screenshot](./images/RDS/use-anti-patterns.png)
+    
+### Amazon ElasticCache
+
 - Rápido, latência baixa (criação, operação e escalabidade)
 - Não utiliza disco
 - Armazenamento em processamento e memória (in-memory cache)
@@ -575,6 +684,65 @@ Backups:
 - Tipos:
   - Memory cached: armazena no bd relacionado a objetos
   - Redis: key-value and Multi-AZ
+  
+It is a in-memory database and is often used for caching data that comes for other databases
+- Fully managed implementations Redis and Memcached
+- It is a key/value store
+- In-memory database offering high performance and low latency
+- ElastiCache node run on Amazon EC2 instances, you you most choose an instance family/type
+
+- Redis vs Memcached:
+  ![Screenshot](./images/ElastiCache/redis-vs-memcached.png)
+  
+- Use cases:
+  ![Screenshot](./images/ElastiCache/use-cases.png)
+  ![Screenshot](./images/ElastiCache/examples-apps.png)
+
+#### Escalability
+- Memcached 
+  - add nodes to a cluster
+  - Scale vertically (node type) - must create a new cluster manually
+  
+- Redis Cluster mode disabled
+  - add replica or change node type - creates a new cluster and migrates
+  - each node is a partition of data
+  - ** Single shard (node group) with one primary node and up to 5 read replica
+ - Cluster mode enabled
+  - Online resharding to add or remove shards; vertical scaling to change node type
+  - Offline resharding to add or remove shards change nnode type or upgrade engine(more fexible than online)
+  - ** Cluster mode enables replication across multiple chards for enhanced scalability and availability
+### Dynamo DB
+Amazon DynamoDB is AWS's serverless NoSQL
+- Key/value store documento store
+- It is a non-relational, key-value type of database
+- Fully serveless service
+- Push button scaling
+- It is made up of:
+  - Tables
+  - items
+  - Atributes
+- Time to Live (TTL)
+ - It lets you define when items in a teble expire so that they can be automatically deleted from the database
+  - With TTL enabled on a table, you can set a timestamp for deletion on a per-iten basis
+    
+Table structure
+![Screenshot](./images/dynamodb/structure-table.png)
+Benefits
+![Screenshot](./images/dynamodb/resume-table.png)
+
+#### DynamoDB Streams
+![Screenshot](./images/dynamodb/stream-tech.png)
+
+![Screenshot](./images/dynamodb/stream-info.png)
+> - Latência baixa (milisegundos)
+> - Documentos -> key value
+> - APP Web/ mobile/ games
+> - SSD
+> - Armazenamento em 3 ou mais data centers
+> - Consistent Reads x Strongly consistent reads
+>   - Consistent Reads: Write/read maior que 1 segundo
+>   - Strongly consistent reads: Write/read menor que 1 segundo
+
   
 #### Redshift
 - Warehouse (armazem) ex: Toyota, Amazon
@@ -586,16 +754,6 @@ Backups:
   - Compute mode -> 128 instâncias de DB
 - MPP: Massively Parallel Processing -> Leitura em várias DB ao mesmo tempo  
 - Não é Multi-AZ
-
-#### Aurora
-- criada 2014
-- compatibilidade com mysql oracle
-- 5x Faster
-- 10x barata
-- Default 10gb -> autoscaling automatico (646GB) -> 64TB
-- criação de replicas (read) x15
-- Recover -> Point in-time 
-- Backup continuo -> 3 zonas
 
 
 ## Route53
