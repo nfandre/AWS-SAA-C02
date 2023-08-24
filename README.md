@@ -734,6 +734,25 @@ Benefits
 ![Screenshot](./images/dynamodb/stream-tech.png)
 
 ![Screenshot](./images/dynamodb/stream-info.png)
+
+#### DinamoDB Accelerator (DAX)
+- Dax is a fully managed, highly available, `in-memory` cache for DynamoDB
+- Improves performance from milliseconds to microseconds
+- Can be a read-through cache and a write-through cache
+- Used to improve `READ` and `WRITE` performance
+- It doesn't need to modify application logs, since DAX is compatible with existing DynamoDB API calls
+
+![Screenshot](./images/dynamodb/dax-arch.png) 
+
+#### DAX vs ElastiCache
+- DAX is `optimized` for DynamoDB
+- With ElastiCache you have more mangement overhead (e.g. invalidation of the cache)
+- With ElatiCache you need to modify application code to point to cache
+- ElatiCache suports more datastores
+
+#### DynamoDB Global Tables
+It is where we have multiple regions and we can actually deploy DynaomDB in a region and then have DynamoDB in multiple other regions and we-re able to read and write to those regions.
+![Screenshot](./images/dynamodb/global-tables.png)
 > - Latência baixa (milisegundos)
 > - Documentos -> key value
 > - APP Web/ mobile/ games
@@ -742,6 +761,7 @@ Benefits
 > - Consistent Reads x Strongly consistent reads
 >   - Consistent Reads: Write/read maior que 1 segundo
 >   - Strongly consistent reads: Write/read menor que 1 segundo
+
 
   
 #### Redshift
