@@ -711,6 +711,7 @@ It is a in-memory database and is often used for caching data that comes for oth
   - Online resharding to add or remove shards; vertical scaling to change node type
   - Offline resharding to add or remove shards change nnode type or upgrade engine(more fexible than online)
   - ** Cluster mode enables replication across multiple chards for enhanced scalability and availability
+
 ### Dynamo DB
 Amazon DynamoDB is AWS's serverless NoSQL
 - Key/value store documento store
@@ -762,19 +763,49 @@ It is where we have multiple regions and we can actually deploy DynaomDB in a re
 >   - Consistent Reads: Write/read maior que 1 segundo
 >   - Strongly consistent reads: Write/read menor que 1 segundo
 
-
   
-#### Redshift
-- Warehouse (armazem) ex: Toyota, Amazon
-- Armazenamento em colunas (leitura em colunas)
-- 1 datbase inicia com 160GB
-- Compressão de dados
-- Tipos:
-  - Single mode -> 1 instância DB
-  - Compute mode -> 128 instâncias de DB
-- MPP: Massively Parallel Processing -> Leitura em várias DB ao mesmo tempo  
-- Não é Multi-AZ
+### Redshift
+-Amazon Redishift is a fast, fully managed data ware house
+- Analyze data using standard SQL and existing Business Intellingence (BI) tols
+- It is a SQL based data warehouse used for analytics applications
+- It is a `relational database` that is used for Online Analytics Processing(OLAP) use cases
+- It uses `EC2 instances`, so you must choose an instance family/type
+- Always keeps three copies of your data
 
+#### OLTP vs OLAP
+![Screenshot](./images/redishift/oltp-vs-olap.png)
+
+#### Reporting and Analytics Use Cases
+For simple use cases, iit is better use Read replica. If the situation is multi-zones with additional geographies and date bases, It is better Redishift
+![Screenshot](./images/redishift/cases-example.png)
+
+#### Data Sources
+![Screenshot](./images/redishift/data-source.png)
+
+> - Warehouse (armazem) ex: Toyota, Amazon
+> - Armazenamento em colunas (leitura em colunas)
+> - 1 datbase inicia com 160GB
+> - Compressão de dados
+> - Tipos:
+>  - Single mode -> 1 instância DB
+>  - Compute mode -> 128 instâncias de DB
+> - MPP: Massively Parallel Processing -> Leitura em várias DB ao mesmo tempo  
+> - Não é Multi-AZ
+
+### Amazon Elatic Map Reduce (EMR)
+Managed cluster plataform that simplifies running big data frameworks including Apache Hadoop and Apache Spark
+- It is used for analytics big data and business intelligence 
+- It is used for processing data `big data` for analytics and business intelligence
+- It can also be used for transforming and mobing large amounts of data
+- Perfrms extract, transform, and load (ETL) functions
+- Always runs in an availabilty Zone
+
+### Amazon Kinesis Services
+
+> Responsável por coletar, armazenar e analizar dados de streaming para serem analisados ou utilizados por outra aplicações. Armazena em shad(partes).
+> - Streams: recebe os dados e armazena para que depois outros serviços possam consumi-los.
+> - Firehose: recebe os dados, mas não armazena, apenas processa ou deixa que outro serviço o faça.
+> - Analytics: faz a análise dentro do Streams e do Firehose.
 
 ## Route53
 Serviço AWS para AWS, responsável pelas resoluções de endereçamento IP.
@@ -983,12 +1014,6 @@ Conjunto de tarefas que devem ser executadas em uma ordem específica. Gerencia 
 
 ### Elastic Transcoder
 Converte mídias para formatos específicos (MP4,MP3,HD).
-
-### Kinesis
-Responsável por coletar, armazenar e analizar dados de streaming para serem analisados ou utilizados por outra aplicações. Armazena em shad(partes).
-- Streams: recebe os dados e armazena para que depois outros serviços possam consumi-los.
-- Firehose: recebe os dados, mas não armazena, apenas processa ou deixa que outro serviço o faça.
-- Analytics: faz a análise dentro do Streams e do Firehose.
 
 ### Cognito
 Web Identity Federation, permitir ou bloquear acesso de acordo com uma credencial que não está armazenada na aplicação.
