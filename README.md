@@ -801,12 +801,192 @@ Managed cluster plataform that simplifies running big data frameworks including 
 - Always runs in an availabilty Zone
 
 ### Amazon Kinesis Services
+It's about streaming data
+- `Data analytics` process data streams
+- `Data Firehose` loads data straight to destinations
+
+![Screenshot](./images/kinesis/overview.png)
+
+#### Amazon Kinesis data stream
+![Screenshot](./images/kinesis/data-stream.png)
+
+#### Kinesis Client Library (KCL)
+It helps you consume and process data from a Kinesis data stream
+- KCL `enumerates shards` and insantiates a `record processor` for each shard it manages
+- It runs on EC2 instance
+- `KCL Worker` with multiple record processors
+- Each shard is processed by exactly on KCL worker and has exactly one corresponding record processor
+- A `record processor` maps to exactly one `shard`
+
+![Screenshot](./images/kinesis/arch.png)
+
+#### Kinesis Data Firehose
+- Producers send data to Firehose
+- There aren o `Shards`, completely automated (scalabiltiy is elastic)
+  - OBS: With Kinesis streams we need actually add the correct number of shards to handle the amount of data that is being put through the Kinesis data stream
+  
+- It is sent to another AWS service for storing, data can be optionally processed/transformed using AWS Lambda
+
+![Screenshot](./images/kinesis/firehose.png)
+
+#### Kinesis Data Analytics
+- Provides real-time SQL processing for streaming data
+- Provides analytics for data coming in from Kinesis Data Streams and Kinesis Data Firehose
+- Destinations can be Kinesis Data Streams, Kinesis Data Firehose, or AWS Lambda
+
 
 > Responsável por coletar, armazenar e analizar dados de streaming para serem analisados ou utilizados por outra aplicações. Armazena em shad(partes).
 > - Streams: recebe os dados e armazena para que depois outros serviços possam consumi-los.
 > - Firehose: recebe os dados, mas não armazena, apenas processa ou deixa que outro serviço o faça.
 > - Analytics: faz a análise dentro do Streams e do Firehose.
 
+### Amazon Athena and AWS Glue
+#### Amazon Athena
+It is a serveless service that can be used to run SQL queries against dta
+- Athena queries data in S3 using SQL
+- Can be connected to other data sources with Lambda
+- Uses a managed Data Catalog (AWS Glue) to store iniformation and shemas about data and tables
+
+- #### Optimizing Athena for Performance
+  - Partition your data
+  - Bucket your data - bucket the data within a single partition
+  - Use Compression - AWS recommend using either Apache Parquet or Apache ORC
+  - Optimze files size
+  - Optimize columnar data store generation
+  - Optimize ORDER BY and GROUP BY
+  - Use approximate functions
+  - Only include the collumns that you need
+#### AWS Glue
+- Fully managed, transform and load(ETL) service
+- Used for preparting data for analytics
+- It runs the ETL jobs on a fully managed, scale-out Apacha Spark environment
+- It Discores data and stores the associated metadata int the AWS Glue Data Catalog
+- Works with data lakes(data on S3), data warehouses(including RedShift), and ata stores (including RDS or EC2 databases)
+- It is used as a `metadata catalog` (can also use Apache Hive)
+- You can use `crawler` to populate the AWS Glue Data Catalog with tables 
+ 
+### Amazon OpenSearch Service (Elaticsearch)
+It is a fully managed service that can be used for searching, visualizing and analyzing text and unstructed data
+- Successor to Amazon Elastic Search Service
+- Distributed and analytics suite
+- Based on the popular open source Elasticsearch
+- Supports queries using SQL syntax
+- Integrate with open-source tools
+- Scale by assing or removing instances
+- Availability in up to three availability Zones
+
+![Screenshot](./images/openSearch/arch.png)
+
+#### OpenSearch Service Deployment
+- Clusters are created (Console, API, or CLI)
+- Clusters are also known as OpenSearch Service `domains`
+
+#### Ingesting Data into Open Service domains
+![Screenshot](./images/openSearch/data-ingest.png)
+
+#### Open Search in an Amazon VPC
+- Clusters can be deplyed in a VPC for secure intra-VPC communications
+- VPN or proxy required to connect from the internet (public domains are directly acessible)
+- Limitations of VPC deployments
+  - you can't switch from VPC to a public endpoint, The reverse is also true
+  - you can't launch your domain within a VPC that uses dedicated tenancy
+  - After you place a domain within a VPC, you can't move it to a different VPC, but you can change the subnets and security group settings
+
+#### THE ELK Stack
+- ElK stands for Elasticsearch >  Logstash < and Kibana
+- this is a popular combination of projects
+- Aggregate logs from systems and applications, analyze these logs, and create vizualizations
+
+#### OpenSerach Access Control
+- `Resource-based policies` - Often called a domain access policy
+- `Identity-based policies` - attached to users or roles (principals)
+- `IP-based policies` - Restrict access to one or more IP addresses or CIDR blocks
+- `Fine-grained access contro` - Provides"
+  - Role-based acess control
+  - Security at the index, document, and field level
+  - OpenSearch dashboards multi-tenancy
+  - HTTP basic authenticatio for OpenSearch and OpenSearch Dashboards
+
+#### OpenSearch Best Practices
+- Deploy OpenSearch data instances across three Availability Zones(AZs) for the best availability
+- Provision instances in multiples of three for equa distribution across AZs
+- If three AZs are not available use two AZs with equal numbers of instances
+- Use three dedicated master nodes
+- Configure at least one replica for each index
+- Apply restrictive resource-based access policies to the domain ( or use fine-grained acess control)
+- Create the domain within an Amazon VPC
+- For sensitive data enable node-to-node encryption and encryption at rest
+
+### Amazon DocumentDB
+- Amazon Document DB provides MongoDB compatibility
+- It is a database service that is purpose-built for JSON data management at scale
+- Fully managed service
+- Storage scales automatically upt to 64 TB without any impact to you application
+
+### Amazon Keyspaces (for Apache Cassandra)
+- A scalable, highly available, and manged Apache Cassandra-compatible database service
+- it enables yout to use the Cassandra Query Language API code
+- Keyspaces is serverless and fully manged
+- Scales automatically in response to application traffic
+
+### Amazon Nepture
+- Fully managed graph database service
+- Build and run indentity, knowledge, fraud graph, and other applications
+- Deploy high performance graph applications using popular open-source APIs including:
+  - Gremlin
+  - openCypher
+  - SPARQL
+  
+### Amazon Quantum Ledger Database
+- Amazon QLDB is a fully managed ledger database that provides a transparent, immutable, and cryptographically verifiable transaction log
+- It has a built-in immutable journal that stores an accurate and sequenced entry of every data change
+- The journal is append-only, meaning that data can only be added to a journal, and it cannot be overwritten or deleted
+- It uses cryptography to create a concise summary of your change history
+- Generated using cryptographic hash fucntion (SHA-256)
+- Serveless and offers automatic scalability
+
+### Other Analytics Services
+### Amazon Timestream
+Time series database service for IoT and operational applications
+- faster and cheaper than relational databases
+- Keeps recent data in memory and moves historical data to acost optimezed stored tier based upon use defined policies
+- Serverless and scales automatically
+
+### AWS DATA Exchange
+It is a data marketplace with over 3,000 products from 250+ providers 
+- It suports Data Files, Data Tables, and Data APIs
+- Consume directly into data lakes, applications, analytics, and machine learning models
+- Automatically export new or updated data sets to Amazon S3
+- Query data tables with AWS Data Exchange for Amazon Reshift
+![Screenshot](./images/other-data-analytics/data-exchange-arch.png)
+
+### AWS Data Pipeline
+It is a managed ETL (Extract-Transform-Load) Service
+- Process and move data between different AWS compute and storage services
+- Data sources can be on-premises
+- Data can be processed and transformed
+- Results can be loaded to services such as Amazon S3, Amazon RDS, Amazon DynamoDB, and Amazon EMR
+
+### Data Lake
+#### What is a Data Lake?
+A data lake is a centralized repository that allows you to store all your structured and unstructured data at any scale
+![Screenshot](./images/other-data-analytics/data-lake.png)
+
+#### Data Lake vs Data Ware House
+![Screenshot](./images/other-data-analytics/data-lake-vs-warehouse.png)
+
+### AWS Lake Formation
+It enables yout to set up secure data lakes in days
+- Data can be collected from databases and object storage
+- It is saved to the Amazon S3 data lake
+- You can then clean and classify data using ML algorithms
+
+### Amazon Managed Streaming for Apache Kafka (MSK)
+It is used for ingesting and processing streaming data in real-time,
+- it is similiar to Kinesis, but Apache Kafka is a open source project rather than Kinesis, which is a especific
+- Build and run Apache Kafka applications
+- It is a fully managed service
+- Provisions, configures, and maintains Apache kafka clusters and Apache ZooKeeper nodes
 ## Route53
 Serviço AWS para AWS, responsável pelas resoluções de endereçamento IP.
 - Redundância de localização: replicado para todas locations
