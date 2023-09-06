@@ -522,15 +522,6 @@ it is a Fully managed service for deploying containerized web app and APIs.
 
 - PaaS solution with all components managed - just bring your cod and container image
 
-
-## AWS Config
-Dedo duro, permite avaliar(auditar) recursos para garantir conformidade e seguir diretrizes.
-- Monitoramento contínuo
-- Histórico de tudo
-- CloudTrail amigável
-- Escopo Regional
-- Custom checks
-
 ## AWS Cloud Trail
 - Trilhas de logs
 - Possibilita automação
@@ -715,6 +706,7 @@ It is a in-memory database and is often used for caching data that comes for oth
 ### Dynamo DB
 Amazon DynamoDB is AWS's serverless NoSQL
 - Key/value store documento store
+- It is a schema-less NoSQL taht provides push-button scaling
 - It is a non-relational, key-value type of database
 - Fully serveless service
 - Push button scaling
@@ -804,7 +796,7 @@ Managed cluster plataform that simplifies running big data frameworks including 
 It's about streaming data
 - `Data analytics` process data streams
 - `Data Firehose` loads data straight to destinations
-
+- PUT 1000 records per second
 ![Screenshot](./images/kinesis/overview.png)
 
 #### Amazon Kinesis data stream
@@ -1430,17 +1422,119 @@ It can also throttle the APIs, it sets a limite on a steady-state rate and a bur
 #### API Gateway - Usage Plans and API Keys
 API Key - Users connect to specific public endpoint with API key that is configured in a usage plan
 
-## Cloud Formation
-Cria a partir de códigos (template) as configurações de serviços na AWS (EC2, S3 etc)
-- Benefícios:
-  - INFRA baseada em códigos
-    - Controle e gerenciamento
-    - Versões
-    - Visualizar mudanças antes que elas sejam aplicadas
-  - Custo
-    - TAG.
-    - Custo estimado
-    - Sistema de adição e remoção de serviços
+## Deploy and management
+### Cloud Formation
+It is a toll that we can use to build infrastructure according to code
+![Screenshot](./images/cloudformation/arch.png)
+- Benefits
+  - Infrastructure is provisioned consistently, with fewer mistakes (human error)
+  - Less time and effort than configuring resources manually
+  - Verson control
+  - Free to use(you are only charged for the resources provisioned)
+  - Can be used to manage updates and dependencies
+  - Can be used to rollback and delete the entire stack as well
+
+![Screenshot](./images/cloudformation/features.png)
+
+> Cria a partir de códigos (template) as configurações de serviços na AWS (EC2, S3 etc)
+> - Benefícios:
+>  - INFRA baseada em códigos
+>    - Controle e gerenciamento
+>    - Versões
+>    - Visualizar mudanças antes que elas sejam aplicadas
+>  - Custo
+>    - TAG.
+>    - Custo estimado
+>    - Sistema de adição e remoção de serviços
+  
+### AWS Elastic Beanstalk
+It is a service that can automate the creation and management of web applications runnin on Amazon EC2
+- About(focused) web applications different of cloud formation
+- Create the entire environmnet for you, including Amazon EC2, a web application environment runnin on top of that. Also a load balancer and even Amazon RDS, if you choose as well
+- it is similar to cloud formation, but the scope is different
+- `Suports`: java, .NET, PHP, Node.js, Python, Ruby, Go and Docker web applications
+
+#### Components (Layers)
+- Applications: contains environments, configurations and application versions
+- Application Version: A specific reference to a section of deployable code
+- Environments: An application version that has been deployed on AWS resources
+  - `Web servers`: an standard application that listen for and then process HTTP request, typically over port 80
+  - `Workers: are specialized applications that have a background processing task listens for messages on an Amazon SQS queue
+  
+### AWS SSM Parameter Store
+It provides secure, hierarchical storage for configuration data and secrets
+- Store data such as passwords, database strings, and license codes as parameter values
+- No automatically native rotation of Keys 
+### AWS Secrets Manager 
+Stores and rotate secrets safely without the need for code deployments
+- Secrets Manager offers automatic rotation of credentials (built-in) 
+  - Amazon RDS
+  - Amazon Redshift
+  - Amazon DocumentDB
+- For other services you can write your own AWS Lambda function for automatic rotation
+  
+![Screenshot](./images/secretsManager/arch.png)
+
+#### AWS Secrets Manager VS  AWS SSM Parameter Store
+![Screenshot](./images/secretsManager/secrets-vs-params.png)
+
+## AWS Config
+Evaluates your AWS resource configurations for desired settings
+- Get a snapshot of the current configurations of resource that are associated with your AWS account
+- Retrieve configurations of resources that exist in your account
+- Retrieve historical ocnfigurations of one or more resources
+- Receive a notifications wheneve a resource is created, modified or deleted
+- View relationships between resources
+
+> Dedo duro, permite avaliar(auditar) recursos para garantir conformidade e seguir diretrizes.
+> - Monitoramento contínuo
+> - Histórico de tudo
+> - CloudTrail amigável
+> - Escopo Regional
+> - Custom checks
+
+### AWS OpsWorks
+It is a configuratioin management service that provides managed instances of Chef and Puppet
+- Updates include patching, updating, backup, configuration and compliance management
+![Screenshot](./images/opsWorks/arch.png)
+  
+### AWS Resource Access Manager (RAM)
+It enables to share AWS resource whithin your account or across accounts
+- Shares Resources
+  - Across AWS accounts
+  - Within AWS Organizations or OUs
+  - IAM roles and IAM users
+- Resource shares are created with
+  - The AWS RAM Console
+  - AWS RAM APIs
+  - AWS CLI
+
+### RPO, RTO, DR Strategies
+#### RPO  Recovery Point Objective
+Measurement of the amount of data that can be acceptably lost
+- Measured in secods, minutes or hours
+- Example:
+  - you can acceptably lose 2 hours of data in a database (2hr RPO)
+  - This means backups must be taken every 2 hours
+   
+##### Achievable
+![Screenshot](./images/rpo-rto-dr-strategies/rpo-achievable.png)
+
+#### Recovery Time objective (RTO)
+Measurement of the amount of time it takes to restore after a disaster event
+- Measured in seconds, minutos or hours
+- Example:
+  - The IT department expect it to take 4 hours to bring applications online after a disaster
+  - This would be an RTO of 5 hours
+
+![Screenshot](./images/rpo-rto-dr-strategies/rpo-rto.png)
+##### Achieavable
+![Screenshot](./images/rpo-rto-dr-strategies/rto-achievable.png)
+
+#### DR Strategies (Disaster Recovery)
+![Screenshot](./images/rpo-rto-dr-strategies/dr-strategies.png)
+
+
 ## CLI - Commands
 aws configure
 
