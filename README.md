@@ -1534,6 +1534,35 @@ Measurement of the amount of time it takes to restore after a disaster event
 #### DR Strategies (Disaster Recovery)
 ![Screenshot](./images/rpo-rto-dr-strategies/dr-strategies.png)
 
+## Monitoring, Logging and Auditing
+### CloudWatch
+It is used for performance monitoring, alarms, log collection and automated actions
+
+#### Core Features
+##### CloudWatch Metrics 
+services send time-ordered data points to CloudWatch
+- Metrics are sent to CloudWatch for many AWS services
+- EC2 metrics are sent every 5 minutes by default (free)
+- Detailed EC2 monitoriing sends every 1 minute(chargeable)
+- Unified CloudWatch Agent sends system-level metrics for EC2 and on-premises servers
+- System-level metrics include memory and disk usage
+- Can publish custom metrics using CLI or API
+- Custom metrics are one of the follwaing resolutions
+  - `Standard resolution` - data having a one-minute granularity
+  - `High resolution` - data at a granularity of one second
+##### CloudWatch Alarms
+It monitors metrics and initiate actions
+- Metric alarm - perfoms one or more actions based on a single metric
+- Composite alarm - uses a rule expression and takes into account multiples alarms
+- Metric alarm states: 
+  - OK - Metric is within a threshold
+  - ALARM - Metric is outside a threhold
+  - INSUFFCIENT_DATA - not enoufh data
+##### CloudWatch Logs
+It is a centralized collection of system and applications logs
+#####CloudWatch Events
+It is a stream of system events describing changes to AWS resources and can trigger actions
+
 
 ## CLI - Commands
 aws configure
