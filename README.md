@@ -492,7 +492,7 @@ Workload Auto Scaling Details:
   - Karpenter open souce autoscaling project: works directly with the Amazon EC2 fleet
   
 Amazon EKS Elastic Load Balancing
-- The AWS Load Balancer Controller manages AWS Elastic Load Balancrs for a Kubernetes cluster
+- The AWS Load Balancer Controller manages AWS Elastic Load Balancers for a Kubernetes cluster
 - Install the AWS Load Balancer Controller using Helm V3 or later or by applying a Kubernetes manifest
 - The controller provisions the following resources:
   - An AWS Applicaton Load Balancer (ALB) when you create a Kubernetes Ingress
@@ -500,7 +500,7 @@ Amazon EKS Elastic Load Balancing
   
 Amazon EKS Distro:
   - it is a destibution of Kubernetes with the same dependencies as Amazon EKS
-  - Allows you to manually run Kubernetes clsters anywhere
+  - Allows you to manually run Kubernetes clusters anywhere
   - includes binaries and containers of open-source Kubernetes, etcd, networking, and storage plugins, tested for compatibility
   - You can securely access EKS Distro releases as open source on GitHub or within AWS via Amazon S3 and Amazon ECR
   
@@ -1560,8 +1560,68 @@ It monitors metrics and initiate actions
   - INSUFFCIENT_DATA - not enoufh data
 ##### CloudWatch Logs
 It is a centralized collection of system and applications logs
-#####CloudWatch Events
+- Gather application and system logs in CloudWatch
+- Send toÇ
+  - Amazon s3
+  - Kinesis Data streams
+  - Kinesis Data Firehose
+  
+##### CloudWatch Events
 It is a stream of system events describing changes to AWS resources and can trigger actions
+
+##### The Unified CloudWatch Agent
+It enables collect internal system-level metrics from Amazon EC2 instances across oprating systems
+- Collect system-levem metrics from `on-premises servers`
+- Retrieve custom metrics from your applications or services using the SatatsD and collectd protocols
+- Agent must be installed on the server
+- Can be installed on:
+  - Amazon EC2 instances
+  - On-premises servers
+  - Linux, Windows Server or macOS
+
+### AWS CloudTrail  
+It is a service that you can use for capturing information about the API actions that are happening in your AWS account. So, as we know, whenever you do anything in AWS like launch an EC2 instance or modify a resouce, every time you do that, you're generating an API a action.
+- CloudTrail logs `API activity` for auditing
+- by default, management events are logged and retained for 90 days
+- A `CloudTrail Trail` logs any events to S3 for indefinte retention
+- Trail can be within Region or all Regions
+- CloudWatch Events can triggered based on API calls in CloudTrail
+- Events can be streamed to CloudWatch Logs
+
+#### Types of Events
+#### Management events
+it provides information about management oprations that are perfomed on resources in your AWS account
+
+#### Data events
+it provides information about resource operations performe on or in a resource
+
+#### Insights events
+It identifys and respond to unusual activity associated with write API call by continuously analyzing CloudTrail management events
+
+
+### Amazon CloudWatch Events / Event Bridge
+![Screenshot](./images/logs/eventbridge.png)
+
+
+### Metric Analysis and Tracing (Grafana, Prometheus, X-Ray)
+#### Tracing with AWS X-Ray
+![Screenshot](./images/logs/x-ray.png)
+![Screenshot](./images/logs/x-ray-2.png)
+
+#### Amazon Managed Service for Prometheus
+- Protheus is an open-source monitoring system and time series database
+- Use the open-source Prometheus query language (PromQL) to monitor and alert on the performance of containerized worklaods
+- Automatically scales the ingestion, storage, alerting, and querying of operational metrics as workloads grow or shrink
+- Integrated with Amazon EKS, Amazon ECS, and AWS Dstro for OpenTelemetry
+  ![Screenshot](./images/logs/prometheus.png)
+
+#### Amazon Managed Grafana
+Grafana is an open-source analytics and monitoring solution for databases
+- Highly scalable, highly available and fully managed service Grafana
+- It Provides interactive data visualization for you monitoring and operational data
+- Visualize, analyze, and alarm on your metrics, logs, and traces collected from multiples data sources
+- Integrates with AW SSO and SAML
+
 
 
 ## CLI - Commands
