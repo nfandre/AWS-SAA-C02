@@ -1187,12 +1187,6 @@ Conjunto de tarefas que devem ser executadas em uma ordem específica. Gerencia 
 ### Elastic Transcoder
 Converte mídias para formatos específicos (MP4,MP3,HD).
 
-### Cognito
-Web Identity Federation, permitir ou bloquear acesso de acordo com uma credencial que não está armazenada na aplicação.
-- User Pool: Retorna autenticação do User.
-- Identity Pool: Retorna o que pode ou não pode acessar
-
-
 
 ## Serverless  
 - "Sem servidor"
@@ -1622,6 +1616,146 @@ Grafana is an open-source analytics and monitoring solution for databases
 - Visualize, analyze, and alarm on your metrics, logs, and traces collected from multiples data sources
 - Integrates with AW SSO and SAML
 
+## Security in the Cloud
+
+### AWS Directory Service (AWS Managed Microsoft AD)
+It is a managed implementation of Microsoft Active Directory running on Windows Server
+- Best choice if you have more than 5000 users and/or need a trust relationship set up
+- Can perform schema extensions
+- Can setup trust relationships to with on-premises AD:
+  - On-premises users and groups can access resources in either domain usin SSO
+  - Requires a VPN or Direct Connect connection
+
+![Screenshot](./images/security/active-directory.png)
+
+#### AD Connector
+- Redirects directory requests to your on-premise AD
+- Best choice when you want to use an existing AD with AWS services
+- AD connector comes in two sizes:
+  - Small - designed for organizations up to 500 users
+  - Large - desigened for organizations up to 5000 users
+  
+- Requires VPN or Direct Connect connection
+- Join EC2 instances to your on-premises AD through AD Connector
+- Login to the AWS Management Console using yor on-premise AD Dcs for authenticaitons
+
+![Screenshot](./images/security/ad-connector.png)
+
+#### Simple AD
+Inexpensive (economico) Active Directory-compativle service with common directory features
+- Standalone(autonomo), it's fully managed, and it's a directory service running in the AWS
+- Simple AD is generally the least expensive option
+- Best choice for less than 5000 users and don't need advanced AD features
+- Features include:
+  - Manage user accounts/ groups
+  - Apply group policies
+  - Kerberos-based SSO
+  - Supporrts joining Linux or Windows based EC2 instances
+  
+### Identity Providers and Federation
+
+#### IAM - SAML 2.0 Identity Federation
+![Screenshot](./images/security/saml-identity-federation.png)
+
+#### IAM- Web Identity Federation
+![Screenshot](./images/security/web-identity-federation.png)
+
+#### IAM identity Center
+It is the successor to AWS Single Sign-on (SSO)
+![Screenshot](./images/security/iam-identity-center.png)
+
+
+
+### Amazon Cognito
+It is principally used for adding sign in and sign-up functionality to web and mobile applications.
+- This is the service to use for most web and mobile applications, rather than the web identity federation
+
+![Screenshot](./images/security/cognito.png)
+> Web Identity Federation, permitir ou bloquear acesso de acordo com uma credencial que não está armazenada na aplicação.
+> - User Pool: Retorna autenticação do User.
+> - Identity Pool: Retorna o que pode ou não pode acessar
+ 
+#### Cognito User Pools
+It is a directory for managing sign-in and sign-up for mobile applications
+- It's where our identities are stored or it's  where we fedarate to an identity source
+- Identities are in ther user pool
+
+![Screenshot](./images/security/cognito-user-pool.png)
+
+#### Cognito Identity Pool
+It used to obtain ``temporary``, limited-privilege credentials for AWS services
+- Identities can come from a Cognito user pool, but can also federate to and identity pool directily
+- It use AWS STS to obtain the credentials
+  
+![Screenshot](./images/security/cognito-identity-pool.png)
+
+#### User Pools + Identity Pools
+![Screenshot](./images/security/cognito-user-pool-identity-pool.png)
+
+
+### Encryption Primer
+#### Encryption In Transit vs At rest
+![Screenshot](./images/security/encryption-transit-vs-at-rest.png)
+
+#### Asymmetric Encryption 
+it is encryption is known as public key cryptography
+- Messages encrypted with the public key can only be decrypted with teh private key
+- Messages encrypted with teh private key can be decrypted with the public key
+- Examples includes SSK/TLS AND SSH
+
+![Screenshot](./images/security/asymmetric-example.png)
+
+#### Symmetric Encryption
+![Screenshot](./images/security/symmetric-example.png)
+
+
+### AWS Key Management Service (KMS)
+It is used to create and managed ``symmetric`` and `asymmetric` encryption keys
+- The `KMS keys` are protected by hardware security modules (HSMs)
+
+![Screenshot](./images/security/kms-arch.png)
+
+#### KMS Keys
+It used to be known as `customer master keys` or CMKs
+![Screenshot](./images/security/kms-keys.png)
+
+#### Alternive Key Stores
+#### External Key Store
+- Keys can be stored outside of AWS to meet regulatory requirements
+- You can create a KMS key in an AWS KMS external key store (XKS)
+- All keys are generated and stored in an external key manager
+- When using an XKS, key material never leaves yur HSM (Hardware security module)
+
+#### Custom Key Store
+- You can create KMS keys in an AWS CloudHSM custom key store
+- All keys are generated and stored in an AWS CloudHSM cluster that you own and manage
+- Cryptographic operations are perfomed solely in the AWS CloudHSM cluster you own and manage
+- Custom key stores are not available for asymmetric KMS keys
+
+#### AWS Managed KMS Keys
+- Created, managed, and used on your behalf by an AWS service that is integrated with AWS KMS
+- You cannot manage these KMS keys, rotate them, or change their keys policies
+- You also cannot use AWS managed KMS keys in cryptographic operations directly
+  - The service that creates them uses them on your behalf
+  
+#### Data Encryption Keys
+It is encrpytion keys that you can use to encryption large amounts of data
+- you can use AWS KMS keys to generate, encrypt, and decrypt data keys
+- AWS KMS does not store, manage, or track your data keys, or perform cryptographic operations with data keys
+- you must use and manage data keys outside of AWS KMS
+
+#### KMS Keys and Automatic Rotation
+![Screenshot](./images/security/kms-keys-rotation.png)
+![Screenshot](./images/security/kms-keys-rotation-generate.png)
+![Screenshot](./images/security/kms-keys-rotation-auto.png)
+
+#### Manual Rotation 
+![Screenshot](./images/security/kms-keys-manual-rotation.png)
+
+#### KMS Key Policies
+![Screenshot](./images/security/kms-keys-policies-1.png)
+![Screenshot](./images/security/kms-keys-policies-2.png)
+![Screenshot](./images/security/kms-keys-policies-3.png)
 
 
 ## CLI - Commands
