@@ -1755,8 +1755,15 @@ It is encrpytion keys that you can use to encryption large amounts of data
 #### KMS Key Policies
 ![Screenshot](./images/security/kms-keys-policies-1.png)
 ![Screenshot](./images/security/kms-keys-policies-2.png)
+- Grants are useful for temporary permissions
 ![Screenshot](./images/security/kms-keys-policies-3.png)
 
+#### Additional Exam Tips
+- To share snapshots with anoter account you must specify `Decrypt` and `CreateGrant` permissions
+- The KMS:ViaService condition key can be used to limit key usage to specific AWS services
+- Cryptographic erasure means removing the ability to deceypt data and can be achieved when using `imported key material` and deleting that key material
+- You must use the `DeleteIportedKeyMaterial` API to remove the key material
+- An `InvalidkeyId` exception when using SSM Parameter Stores indicates the KMS key is not enabled
 
 ## CLI - Commands
 aws configure
