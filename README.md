@@ -349,10 +349,6 @@ is a service that enables us to create one organization for many AWS accounts.
 - Tag policy: Is the AWS Organization service that enforces tag standardization
 - Organizations API: Can be used for migrating accounts but it wulde be easier to use the console for a singule account.
 - AWS Organization console: move the account
-## AWS WAF
-Protects against DDoS Attacks and malicious Web Traffic.
-- Atua na camanda 7 de aplicação
-- Filtrar tráficos de origens (ex: países\)
 
 ## ECS - Amazon Elastic Container Service
 Serviço de orquestração de containers
@@ -1764,6 +1760,73 @@ It is encrpytion keys that you can use to encryption large amounts of data
 - Cryptographic erasure means removing the ability to deceypt data and can be achieved when using `imported key material` and deleting that key material
 - You must use the `DeleteIportedKeyMaterial` API to remove the key material
 - An `InvalidkeyId` exception when using SSM Parameter Stores indicates the KMS key is not enabled
+
+### AWS CloudHSM
+It is a cloud-based hardware security module(HSM)
+- Generate and use your own encryption keys on the AWS Cloud
+- CloudHSM runs in your Amazon VPC
+- Uses FIPS 140-2 level 3 validated HSMs (extremely secure hardware)
+- Managed service and automatically scales
+- Retain control of your encryption keys - you control access (and AWS has no visibility of your encryption keys)
+  
+![Screenshot](./images/security/cloud-hsm.png)
+
+### AWS Certificate Manager (ACM)
+Create, store renew SSL/TLS X.509 certificates
+- Single domains, multiple domain names and wildcards
+- Integrates with several AWS services including:
+  - ELB
+  - Amazon CloudFront
+  - AWS Elastic Beanstalk
+  - AWS Nitro Enclaves
+  - AWS CloudFormation
+
+### AWS WAF
+AWS WAF is a web application firewall
+- WAF lets you create rules to filter web traffic based on conditions that include iP addreses, HTTP headers and body, or custom URIs (ACL with AWS WAF)
+- WAF makes it easy to create rules that block common web exploits like SQL injection and cross site scripting
+
+#### Web ACLs 
+You use a web access control list (ACL) to protect a set of AWS resources
+#### Rules
+Each rule contains a statement that defines the inspection criteria, and an action to take if a web request meets the criteria
+#### Rule groups
+You can use rules individually or in reusable rule groups
+#### IP Sets
+An IP set provides a collection of IP addresses and IP adress ranges that you want to use together in a rule statement
+#### Regex patter set
+A regex patter set provides a collection of regular expressions that you want to use together in a rule statement
+#### Rule action
+A rule action tells AWS WAF what to do with a web request when it `matches` the criteria defined in the rule:
+- `Count` - AWS WAF counts the request but doesn't determine whether to allow it or block it. With this action, AWS WAF continues processing the remaining rules in the ACL
+- `Allow` - AWS WAF allows the request to be forwarded to the AWS resource for processing and response
+- `Block` - AWS WAF blocks the request and the AWS resource responds with an HTTP 403 status code
+
+#### Match
+Match statements compare the web request or its origin against conditions that you provide
+![Screenshot](./images/security/waf-match.png)
+
+
+### Amazon Inspector
+It is a service used to perform network and host assessments of our EC2 instances
+- It runs assessments that check for security exposures and vulnerabilities in EC2 instances
+- It can be configured to run on a schedule
+- Agent must be installed on EC2 for host assessments
+- Network assessments do not require an agent
+
+#### Network Assessments
+Assessments: Network configuration analysis to check for ports reachable from outside the VPC
+- If the inspector Agent is installed on your EC2 instances, the assessment also finds processes reachable on port
+- Price based on the number of instance assessments
+
+#### Host Assessements
+Assessments: Vulnerable software (CVE), host hardening (CIS benchmarks), and security best practices
+- Requires an agent (auto-install with SSM Run Command)
+- Price based on the number of instance assessments
+
+> Protects against DDoS Attacks and malicious Web Traffic.
+> - Atua na camanda 7 de aplicação
+> - Filtrar tráficos de origens (ex: países\)
 
 ## CLI - Commands
 aws configure
