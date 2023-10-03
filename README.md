@@ -20,10 +20,6 @@ Tipos de usuários:
     - Arquitetura de volumes armazenados em cache
     - Arquitetura de volumes armazenados
   - Tape gateway (Backup de software vtl ) virtual VTL -> Glacier
-- Snowball
-  - Snowlball - dispositivo para fazer opload do armazenamento da empresa para Amazon s3
-  - Snowball edge  - contém o um sistema EC2
-  - Snow Mobile - 100 PB "caminhão container"
 - S3 Transfer acceleration 
   - upload de arquivos a partir de edge location (cliente server)
 - RRS - Reduced Redondancy Storage
@@ -1827,6 +1823,120 @@ Assessments: Vulnerable software (CVE), host hardening (CIS benchmarks), and sec
 > Protects against DDoS Attacks and malicious Web Traffic.
 > - Atua na camanda 7 de aplicação
 > - Filtrar tráficos de origens (ex: países\)
+
+### Amazon Macie
+Macie is a fully managed data security and data privacy service
+- Use machine learning and pattern matching to discover, monitor, and help you protect your sensitive data on Amazon S3
+- Macies enables security compliance and preventive security as follows:
+  - indentify a variety of data types, including PII, Protected Health Information (PHI), regulatory documents, API keys, and secret keys
+  - indentify changes to policy and access controll ist  
+  - continuously monitor the security posture of Amazon S3
+  - Generate security findings that you can viewe using the Macie console, AWS Security Hub, or Amazon EventBridge
+  
+### AWS GuardDuty
+It is a intelligent threat detection service ( Serviço inteligente de detecção de ameaça)
+- Detects account compromise, instance compromise, malicius reconnaissance, and bucket compromise 
+- Continuos montioring for events across:
+  - AWS CloudTrail Managemente Events
+  - AWS CloudTrail S3 Data Events
+  - Amazon VPC Flow Logs
+  - DNS Logs
+  
+### AWS Shield
+It is a managed Distributed Denial of Service (DDoS) protection service
+- Safeguards web application running on AWS with always-on detection and automatic inline mitigations
+- Helps to minimize application downtime and latency 
+- Two tiers
+  - `Standard`: no cost
+  - `Advanced`: 3K USD per month and 1 year commitment
+- Integrated with Amazon CloudFront (standard included by default)
+  
+### Defense In-Depth
+It refers to hte practice of implementing security at multiples layers within your application, within your infrastructure. It means that even if you do fail in your security in one area of your application or infrastructure, then hopefully that's not going to lead any major exposure
+
+
+## Migration and Transfer
+### AWS Migration Tools Overview
+### AWS Application Discovery Service
+Collects server hostnames, IP addresses, MAC addresses, as well as resource allocation and utilization details of key resources including CPU, network, memory and disk
+- Agent-based discovery (Discovery agent) (Windows / linux): for Physical servers
+- Agentless discovery (Discovery Connect) (OVA file in Vcenter): for Virtual servers (Virtual Machine VMware)
+
+![Screenshot](./images/migration-transfer/application-discovery-service.png)
+  
+
+### AWS Database Migration Servcie (DMS)
+It is used for migratings databases
+- Cloud to Cloud: EC2 to RDS, RDS to RDS , RDS to Aurora
+- On-Premises to Cloud
+- Homogeneous migrations: Oracle to Oracle, MySQL to RDS MySQL, Microsoft SQL to RDS for SQL Server
+- Heterogeneous migrations: Oracle to Aurora, Oracle to PostgreSQL, Microsoft to RDS MySQL
+
+### AWS Application Migration Service (MGN)
+It is used for migratings servers
+- Highly automated lift-and-shift(rehost) solution for migrating applications to AWS
+- Utilizes continuous, block-level replication and enables short cutover windows measured in minutes
+- Server Migrations Service (SMS) utilizes incremental, snapshot-based replication and enables cutover windows meadured in windows measured in hours
+- AWS recommend using AWS MGN instead of SMS
+- Integrates with the Cloud migration Factory for orchestrating manual processes
+- Can migrate virtual and physical servers
+
+### AWS Server Migration Service (SMS)
+AWS SMS Migrates VMware vSphere, Microsoft Hyper-V/SCVMM, and Azure virtual machines to Amazon EC2
+- Agentless service for migrating on-premises and cloud-based to AWS
+
+### AWS DataSync
+Secure, online service thta automates and accelerates moving data between on premises and AWS storage services
+- It is used for migrating data
+- Shared File System or Object Storage (NFS, SMB, S3, API, HDFS)
+- DataSync `software agent` connects to storage system
+- Data is encrypted in transit with TLS
+
+
+### AWS Snow Family
+- AWS Snowball and Snowmobile are used for migrating large volumes of data to AWS
+- Snowball Edge Compute Optimized
+  - provides block and object storage and optional (GPU)
+  - Use for data collection, machine learning and processing, and storage ins environments with intermittent connectitivity (edge cases)
+  
+- Snowball Edge Storage Optimized
+  - provides block storage and Amazon S3-compatible object
+  - Use for local storage and large-scale data transfer
+- Snowcone
+  - Small device for edge computing, storage and data transfer
+  
+#### Ways to optimize the performance of Snowball transfers:
+1. Use the latest Mac or Linux Snowball client
+2. Batch small files together
+3. Perform multiple copu operations at one time
+4. Copy from multiple workstations
+5. Tranfer directories, not files
+
+
+> - Snowball
+> - Snowlball - dispositivo para fazer opload do armazenamento da empresa para Amazon s3
+> - Snowball edge  - contém o um sistema EC2
+> - Snow Mobile - 100 PB "caminhão container"
+
+### The 7 Rs of Migration
+Refactor, repatform, repurchase, rehost, relocate, retain, retire.
+
+![Screenshot](./images/migration-transfer/7-rs.png)
+
+`Rehost`: AWS Recommend the AWS Application Migration Service (AWS MGN) for lift & shift
+  - Can also use AWS SMS and AWS VM Import/Export
+
+`Replatform`:
+  - AWS Database Migration Service (AWS DMS) and Schema Convertion Tool(SCT)
+  - Migration Elatic Beanstalk (EB) using custom Amazom Machine Image(AMI), or code-level migration
+  - Moderate development and migration effort
+
+`Refactor`: Leverage serverless services and event-driven architecture pattern
+  - Migrate servers to serverless fucntions or containers
+  - Migrate databases to managed DBs or serverless NoSQL BDs
+  - Migrate file stores to object stores or elastic file systems
+  - Decouple with queues, notification services, and orchestration tools
+  - May involve a large amount of development and migration effort as wel as expensive
 
 ## CLI - Commands
 aws configure
