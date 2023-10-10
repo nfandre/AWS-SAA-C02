@@ -1176,10 +1176,6 @@ Conjunto de tarefas que devem ser executadas em uma ordem específica. Gerencia 
 - Pode se extender até 10000 mil tarefas
 - Faz por volta de 1000 por segundo
 
-### Elastic Transcoder
-Converte mídias para formatos específicos (MP4,MP3,HD).
-
-
 ## Serverless  
 - "Sem servidor"
 - Scaling por conta da AWS
@@ -1937,6 +1933,105 @@ Refactor, repatform, repurchase, rehost, relocate, retain, retire.
   - Migrate file stores to object stores or elastic file systems
   - Decouple with queues, notification services, and orchestration tools
   - May involve a large amount of development and migration effort as wel as expensive
+
+
+## Web, Mobile, ML, and Cost Management
+### AWS Amplify 
+Tools and features for building full-stack applications on AWS
+- Build web and mobile backends, and web front UIs
+- It is as visual interface for building web and mobile apps
+  - Use the visual interface to define model, user authentication, and file storage without backend expertise
+  - Easily add AWS services not available within Amplify Studio using the AWS Cloud Development Kit (CDK)
+  - Connect mobile and web apps using Amplify Libraries for iOS, Android, Flutter, React Native, and web (js)
+- AWS Amplify Hosting is a fully managed CI/CD and hosting service for fast, secure, and reliable static and server-side rendered apps
+
+### AWS AppSync
+It is a fully managed service that make it easy to develop GraphQL APIs
+- Applications can securely access, manipulate, and receibe real-time updates from multiple data sources such as databases or APIs
+- AWS AppSync automatically scales a GraphQL API exectuion engine up and down to meet API request volumes
+- Use GraphQL, a data language that enables client apps to fetch, change and subscribe to data from servers
+- It lets you specify whici portions of your data should be available in a real-time manner using GraphQL Subscriptions
+- Server-side data caching capabilities reduce the need to direcly access data sources
+- AppSyn is fully managed and eliminates the operation overhead of managing cache clusters
+
+### AWS Device Farm
+It is an application testing service used for web and mobile apps
+- improve the quality of your web and mobile applications by testing across desktop browsers and real mobile devices hosted in the AWS Cloud
+
+### AWS Machine Learning Services
+### AWS Rekognition
+- Add image and video analysis to your applications
+- Identify objects, people, text, scenes, and activities in images and videos
+- Processes videos stored in an Amazon S3 bucket
+- Publish completion status to Amazon SNS Topic
+#### AWS Rekognition in Event-Driven Architecture
+
+### Amazon Transcribe
+Add speech to text cababilities to applications
+- Recorded speech can be converted to text before it can be used in applications
+- Use a deep learning process called automatic speech recognition (ASR) to convert speech to text quickly and accurately
+
+### Amazon Translate
+Neural machine translation service that delivers fast, high-quality, and affordable language translation
+- Use deep learning models to deliver more accurate and more natural sounding translation
+- Localice content such as websites and applications for your diverse users
+
+### Amazon Textract
+Automatically extract printed text, handwriting, and data from any document
+
+Features:
+  - Optical character recognition (OCR)
+  - Identitfies relationships, structure, and text
+  - Use AI to extract text and strucured data
+  - Recognizes handwriting as well as printed text
+  - Can extract from documents such as PDFs, images, forms, and tables
+  - Undertands context. For example know what data to extract from a receipt or invoice
+
+### Amazon SageMaker
+Helps data scientists and developers to prepare, build, train, and deploy high-quality machine learning (ML) models
+- machine learning, training, and deploying models
+
+### Amazon Comprehend
+- Natural-language processing (NLP) service
+- Use machine learning to uncover information in unstructured data
+- Can identify critical elements in data, including references to language, people, and places, and the text files can be categorized by relevant topics
+- In real time you can automatically and accurately detect customer sentiment in your content
+
+### Amazon Lex
+- Converational AI for Chatbots
+- Build conversational interfaces into any application using voice and text
+- Build bots to increase contact center productivity, automate siimple tasks, and drive operational efficiencies across the enterprise
+
+### Amazon Polly
+- Turns text into lifelike speech
+- craete applications that talk, and build entirely new categories of speech-enabled products
+- Text-to-Speech(TTS) service users advanced deep learnign technologies to synthesize natural sounding human speech
+
+### Amazon Forecast
+Time-series forecasting service
+- Uses ML and is built for business metrics analysis 
+
+### Amazon DevOps Guru
+Cloud operations service for improving `application operational performance and availability`
+- Detect behaviors that deviate from normal operating patterns
+- Benefits:
+  - automatically detect operational issues
+  - Resolve issues with ML-powered insights
+  - Elastically scale operational analytics
+  - Uses ML to reduce alarm noise
+  
+### Elastic Elastic Transcoder
+Transcodes video files to various formats/outputs
+- AWS Elemental Media Convert is new service that provides more functionality and may be better for new use cases
+- Howeber, MediaConvert offers more options overall
+> Converte mídias para formatos específicos (MP4,MP3,HD).
+
+### AWS Licence Manager
+Used to manage licenses from software vendors
+- For examble, manage your Microsft, Oracle, SAP and IBM licences
+- Centralized management of software licences for AWS and on-premises resources
+
+
 
 ## CLI - Commands
 aws configure
