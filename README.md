@@ -2031,8 +2031,42 @@ Used to manage licenses from software vendors
 - For examble, manage your Microsft, Oracle, SAP and IBM licences
 - Centralized management of software licences for AWS and on-premises resources
 
+### AWS Compute Optimizer
+Recommends optimal AWS resources for your workloads to reduce costs and improve performance
+- Uses machine learning to analyze historical utilization metrics
+- Offers optimization guidance for:
+  - Amazon EC2 instances
+  - Amazon EBS volumes
+  - AWS Lambda functions
+- Results can be viewed in the console or via the CLI
 
+### AWS Budgets
+- `Set Custom Budget` - set custom usage and reservation budgets
+- `Configure Alerts` - receive alerts when you exceed or are forecast to exceed your alert thresholds
+- `Integrated with other AWS services` - Includes Cost Explorer Chatbot and Service Catalog
 
+### AWS Cost Allocation Tags
+It helps you to create tags and manage services costs in Cost Explorer painel
+- A tag is a label that you or AWS assigns to an AWS resource.
+
+### AWS Cost Explorer
+It is a free tool that allows you to view charts of your costs
+- You can view cost data for the past 13 months and forecast how much you are likely to spend over the next three months
+- Cost Explorer can be used to discover patterns in how much you spenc on AWS resources over time and to identify cost problem areas
+
+#### Cost & Cost Usage Report
+- Publish Aws biling reports to an Amazon S3 bucket
+- Reports break down costs by
+  - hour, day, month, product, product resource, tags
+  
+- Can update the report up to three times a day
+- Create, retrieve, and delete your reports using the AWS CUR API Reference
+
+#### AWS Price List API
+Query the prices of AWS services
+- `Price List Service API` (AKA the Query API) - query with JSON
+- `AWS Price list API` (AKA the Build API) - query with HTML
+- Alerts via Amazon SNS when prices change
 ## CLI - Commands
 aws configure
 
